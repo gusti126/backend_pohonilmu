@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    {{-- <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
@@ -68,6 +68,86 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
+    <section class="auth">
+        <div class="login">
+            <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card">
+                <div class="card-body">
+                    <img
+                    src="{{ url('front/images/logo2 (2).png') }}"
+                    alt="..."
+                    class="img-fluid img-login"
+                    />
+                    <h5 class="card-title">Login </h5>
+                    <div class="card-text">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="form-group ">
+                            <label for="email" class="">{{ __('E-Mail Address') }}</label>
+
+                            <div class="">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="password" class="">{{ __('Password') }}</label>
+
+                            <div class="">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-4 mb-3 btn-block">
+                        Login
+                        </button>
+                        {{-- <a
+                        href="{{ route('register') }}"
+                        class="btn btn-primary btn-signup mb-3"
+                        >
+                        Register
+                        </a> --}}
+                        {{-- <br />
+                        <a href="{{ route('password.request') }}" class="lupa-password">Lupa Password ?</a> --}}
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
 </div>
 @endsection
+
+@push('style')
+    <style>
+        body {
+            background: #D8EBFF !important;
+        }
+        .card{
+            margin-top: 50%;
+            border-radius: 20px !important;
+        }
+        .btn{
+            border-radius: 30px !important;
+            background: #353434 !important;
+        }
+        .form-control{
+            border-radius: 30px !important;
+        }
+    </style>
+@endpush

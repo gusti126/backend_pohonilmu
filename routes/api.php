@@ -26,3 +26,12 @@ Route::resource('lesson', 'LessonController');
 Route::post('my-course/create', 'MyCourseController@create');
 Route::get('my-course', 'MyCourseController@index');
 Route::post('mentor/email/', 'MentorController@getByEmailMentoer');
+
+// review
+Route::get('review', 'ReviewController@index');
+Route::get('review/{id}', 'ReviewController@show');
+Route::post('review/create', 'ReviewController@create');
+Route::delete('review/{id}', 'ReviewController@destroy');
+
+// detail
+// Route::post('')

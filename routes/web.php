@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'Admin\DashboardController@index')->middleware('auth');
 
 Route::prefix('admin')->middleware(['auth', 'admin'])
 ->group(function(){
@@ -24,6 +22,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])
     Route::get('hadiah/create', 'Manag\HadiahController@create')->name('create-hadiah');
     Route::post('hadiah/store', 'Manag\HadiahController@store')->name('hadiah-store');
     Route::get('hadiaj/delete/{id}', 'Manag\HadiahController@delete')->name('delete-hadiah');
+    Route::get('pendapatan', 'Manag\PendapatanKelasController@index')->name('pendapatan');
 
 });
 

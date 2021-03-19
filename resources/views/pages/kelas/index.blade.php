@@ -7,7 +7,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            <h1>Kelas Page</h1>
+            <h1>Kelas Page Ma</h1>
         </div>
         <div class="col-md-6 text-right">
             <a href="{{ route('kelas.create') }}" class="btn btn-primary">Tambah Kelas</a>

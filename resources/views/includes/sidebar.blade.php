@@ -1,11 +1,22 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('pengajar.index') }}">
-                <div class="sidebar-brand-text" style="color: gold">{{ (request()->is('pengembang*')) ? 'Pengembang' : 'Pengelola' }}</div>
+                <div class="sidebar-brand-text" style="color: gold">
+                    @if (Auth::user()->role === 'admin')
+                        Management
+                    @else
+                        Penegmbang
+                    @endif
+                </div>
             </a>
             <li class="nav-item {{ (request()->is('pengembang/dashboard')) ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('dashboard') }}">
+                @if (Auth::user()->role === 'admin')
+                    <a class="nav-link" href="{{ route('pendapatan') }}">
                     <span>Dashboard</span></a>
+                @else
+                    <a class="nav-link" href="{{ route('dashboard') }}">
+                    <span>Dashboard</span></a>
+                @endif
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">

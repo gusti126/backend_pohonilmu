@@ -16,9 +16,11 @@ class KelMentorController extends Controller
      */
     public function index()
     {
-        $data = Mentor::with('course')->paginate(20);
+        $data = Mentor::with('course.myCourse')->paginate(20);
+        // $data = Mentor::with('course')->sum('id');
         // dd($data);
         $jMentor = Mentor::count();
+
 
         return view('manag.mentor.index', [
             'items' => $data,
