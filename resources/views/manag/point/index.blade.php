@@ -31,13 +31,13 @@
         @foreach ($items as $item)
             <div class="col-md-4">
                 <div class="card shadow">
-                    <img src="{{ $item['image'] }}" alt="" class="img-fluid">
+                    <img src="{{ $item->image }}" alt="" class="img-fluid">
                     <div class="card-body-hadiah p-2">
-                        <p style="font-weight: bold; margin: unset;">{{ $item['note'] }}</p>
-                        <p>Total Yang Menukarkan Hadiah {{ $item['penukaran_hadiah_count'] }}</p>
+                        <p style="font-weight: bold; margin: unset;">{{ $item->note }}</p>
+                        {{-- <p>Total Yang Menukarkan Hadiah {{ $item['penukaran_hadiah_count'] }}</p> --}}
                        <div class="text-center">
                             <a href="" class="btn btn-primary">Ubah</a>
-                        <a href="{{ route('delete-hadiah', $item['id']) }}" class="btn btn-outline-danger ml-5">Delete</a>
+                        <a href="{{ route('delete-hadiah', $item->id) }}" class="btn btn-outline-danger ml-5">Delete</a>
                        </div>
 
                     </div>
@@ -49,7 +49,7 @@
         </div>
     </div>
     <!-- DataTales Example -->
-     <div class="card shadow mb-4">
+     {{-- <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Jumlah Data Tables penukaran hadiah</h6>
         </div>
@@ -68,7 +68,6 @@
                         @forelse ($collect as $item)
                             <tr>
                                 <td>{{ $item['user']['name'] }}</td>
-                                {{-- <td>{{ $item['email'] }}</td> --}}
                                 <td>{{ $item['user']['profile']['no_tlp'] }}</td>
                                 <td>{{ $item['hadiah']['note'] }}</td>
                                 <td>{{ $item['date'] }}</td>
@@ -80,6 +79,6 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 @endsection

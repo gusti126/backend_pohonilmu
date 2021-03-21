@@ -111,15 +111,15 @@
                                 @enderror
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary mr-4 mb-3 btn-block">
+                        <button type="submit" class="btn btn-sign btn-primary mr-4 mb-3 btn-block">
                         Login
                         </button>
-                        {{-- <a
+                         <a
                         href="{{ route('register') }}"
-                        class="btn btn-primary btn-signup mb-3"
+                        class="btn btn-outline-dark  mb-3 btn-block"
                         >
                         Register
-                        </a> --}}
+                        </a>
                         {{-- <br />
                         <a href="{{ route('password.request') }}" class="lupa-password">Lupa Password ?</a> --}}
                     </form>
@@ -144,6 +144,8 @@
         }
         .btn{
             border-radius: 30px !important;
+        }
+        .btn-sign{
             background: #353434 !important;
         }
         .form-control{

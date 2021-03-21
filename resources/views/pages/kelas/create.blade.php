@@ -222,7 +222,7 @@
                     if(this.pick === 3){
                         this.kategori = this.softskill;
                     }
-                    if(this.pick === 5){
+                    if(this.pick === 4){
                         this.kategori = this.hardskill;
                     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Manag;
 
+use App\Hadiah;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -12,48 +13,16 @@ class HadiahController extends Controller
 {
     public function index()
     {
-        $hadia = getHadiah();
-        $data = $hadia['data'];
-        $totalHadiah = count($data);
-        $getpenukar = getPenukarHadiah();
-        $penukar = $getpenukar['data'];
-        $collect = collect($penukar)->pluck('metadata');
-        $count = count($collect);
-        // dd(json_decode($collect[0], true));
-        // $collect->transform(json_decode($collect, true));
-        $collect->transform(function ($item, $key) {
-            return json_decode($item, true);
-        });
-        ;
-        // dd($collect);
-        $paginet = $this->paginate($data);
-        return view('manag.point.index',[
-            'items' => $paginet,
-            'total_hadiah' => $totalHadiah,
-            'penukar' => $penukar,
-            'collect' => $collect
+        $data = Hadiah::paginate(6);
+        $total= Hadiah::count();
+        return view('manag.point.index', [
+            'items' => $data,
+            'total_hadiah' => $total
         ]);
+
     }
 
-        /**
-    * Gera a paginação dos itens de um array ou collection.
-    *
-    * @param array|Collection $items
-    * @param int $perPage
-    * @param int $page
-    * @param array $options
-    *
-    * @return LengthAwarePaginator
-    */
-    public function paginate($items, $perPage = 3, $page = null)
-    {
-        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-        $items = $items instanceof Collection ? $items : Collection::make($items);
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, [
-        'path' => Paginator::resolveCurrentPath(),
-        'pageName' => 'page',
-        ]);
-    }
+
 
     public function create()
     {
@@ -75,7 +44,7 @@ class HadiahController extends Controller
             // dd($data);
         $data['image'] = url('storage/'.$image);
         // dd($data);
-        createHadiah($data);
+        $hadiah = Hadiah::create($data);
 
         return redirect()->route('index-hadiah')->with('success', 'data hadiah berhasil di tambahkan');
     }

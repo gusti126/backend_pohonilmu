@@ -18,6 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// user
+Route::get('user', 'ApiUserController@index');
+Route::get('user/{id}', 'ApiUserController@show');
+Route::get('profile', 'ApiUserController@show');
+
 Route::resource('kategori', 'KategoriController');
 Route::resource('mentor', 'MentorController');
 Route::resource('course', 'CourseController');
@@ -33,5 +38,6 @@ Route::get('review/{id}', 'ReviewController@show');
 Route::post('review/create', 'ReviewController@create');
 Route::delete('review/{id}', 'ReviewController@destroy');
 
-// detail
-// Route::post('')
+// hadiah
+Route::get('hadiah', 'ApiHadiahController@index');
+Route::get('hadiah/{id}', "ApiHadiahController@show");
