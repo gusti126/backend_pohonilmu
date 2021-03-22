@@ -21,7 +21,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // user
 Route::get('user', 'ApiUserController@index');
 Route::get('user/{id}', 'ApiUserController@show');
-Route::get('profile', 'ApiUserController@show');
+Route::get('profile', 'ApiUserController@profile');
+// referal di controller user
+Route::post('referal/cari', 'ApiUserController@cariReferal');
+Route::post('point/tambah', 'ApiUserController@tambahPoint');
 
 Route::resource('kategori', 'KategoriController');
 Route::resource('mentor', 'MentorController');
@@ -41,3 +44,16 @@ Route::delete('review/{id}', 'ReviewController@destroy');
 // hadiah
 Route::get('hadiah', 'ApiHadiahController@index');
 Route::get('hadiah/{id}', "ApiHadiahController@show");
+
+// kememberan
+Route::get('kememberan', 'ApiKememberanController@index');
+Route::get('kememberan/{id}', 'ApiKememberanController@show');
+
+// berlangganan
+Route::get('berlangganan', 'ApiBerlanggananController@index');
+Route::delete('berlangganan/{id}', 'ApiBerlanggananController@destroy');
+Route::post('berlangganan/create', 'ApiBerlanggananController@create');
+
+// order
+Route::post('order/create', 'ApiOrderController@create');
+Route::post('webhook', 'ApiOrderController@midtransHandler');

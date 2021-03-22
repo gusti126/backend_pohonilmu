@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Berlangganan;
 use App\Course;
 use App\MyCourse;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -51,18 +53,27 @@ class MyCourseController extends Controller
 
         // cek user id berlangganan atau tidak
         $userId = $request->input('user_id');
-        $getUser = getUser($userId);
-        // dd($getUser['data']['member_page']['updated_at']);
-        // dd($getUser['data']['id']);
-        if($getUser['status'] === 'error')
+        $berlangganan = Berlangganan::where('user_id', $userId)->first();
+        if(!$berlangganan)
         {
             return response()->json([
-                'status' => $getUser['status'],
-                'message' => $getUser['message']
+                'status' => 'error',
+                'message' => 'user tidak berlangganan'
+            ], 404);
+        }
+        $getUser = User::with('berlangganan.kememberan')->find($userId);
+        // dd($getUser->berlangganan->kememberan->akses_kelas);
+        // dd($getUser['data']['member_page']['updated_at']);
+        // dd($getUser['data']['id']);
+        if(!$getUser)
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'data id user tidak ada'
             ], 404);
         }
 
-        $p = Carbon::create(date($getUser['data']['member_page']['updated_at']));
+        $p = Carbon::create(date($getUser->berlangganan->updated_at));
         $date = $p->addMonth();
         $waktuHabis = date($date);
         // dd(date($date));
@@ -84,7 +95,7 @@ class MyCourseController extends Controller
         }
 
         $TotalMyCourse = MyCourse::where('user_id', $userId)->count();
-        $maxGabung = $getUser['data']['member_page']['akses_kelas'];
+        $maxGabung = $getUser->berlangganan->kememberan->akses_kelas;
         // dd($TotalMyCourse >= $maxGabung);
         if($TotalMyCourse >= $maxGabung)
         {

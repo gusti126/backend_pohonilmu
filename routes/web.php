@@ -18,6 +18,9 @@ Route::get('/', 'Admin\DashboardController@index')->middleware('auth');
 Route::prefix('admin')->middleware(['auth', 'admin'])
 ->group(function(){
     Route::resource('kel-mentor', 'Manag\KelMentorController');
+    Route::resource('kel-kememberan', 'Manag\KememberanController');
+
+
     Route::get('hadiah', 'Manag\HadiahController@index')->name('index-hadiah');
     Route::get('hadiah/create', 'Manag\HadiahController@create')->name('create-hadiah');
     Route::post('hadiah/store', 'Manag\HadiahController@store')->name('hadiah-store');

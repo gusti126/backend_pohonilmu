@@ -15,12 +15,19 @@
                     <span>Dashboard</span></a>
                 @else
                     <a class="nav-link" href="{{ route('dashboard') }}">
-                    <span>Dashboard</span></a>
+                    <span>Dashboard Pengembang</span></a>
                 @endif
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
+            @if (Auth::user()->role === 'admin')
+                <li class="nav-item {{ (request()->is('admin/kel-kememberan*')) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('kel-kememberan.index') }}">
+                        <span>Kememberan</span>
+                    </a>
+                </li>
+            @endif
+            <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item {{ (request()->is('pengembang/pengajar*')) ? 'active' : '' }}">
 

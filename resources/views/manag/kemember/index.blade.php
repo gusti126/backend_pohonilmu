@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Mentor Page
+    Member Page
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
             <h4>Halaman Mentor</h4>
         </div>
         <div class="col-6 text-right">
-            <a href="{{ route('kel-mentor.create') }}" class="btn btn-primary ">Tambah Mentor</a>
+            <a href="{{ route('kel-kememberan.create') }}" class="btn btn-primary ">Tambah Kememberan</a>
         </div>
         <div class="col-12">
             @if ($message = Session::get('success'))
@@ -31,7 +31,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Jumlah Data Tables Mentor {{ $jumlah_mentor }}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Jumlah Data Tables Kememberan </h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -39,8 +39,9 @@
                     <thead>
                         <tr class="text-center">
                             <th>Nama</th>
-                            <th>Profession</th>
-                            <th>Total Kelas</th>
+                            <th>Harga</th>
+                            <th>Akses Kelas</th>
+                            <th>Bonus Point</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -48,11 +49,12 @@
                         @forelse ($items as $item)
                             <tr>
                                 <td>{{ $item->nama }}</td>
-                                <td>{{ $item->profesi }}</td>
-                                <td>{{ \App\Course::where('mentor_id', $item->id)->count() }}</td>
+                                <td>{{ $item->harga }}</td>
+                                <td>{{ $item->akses_kelas }}</td>
+                                <td>{{ $item->get_point }}</td>
                                 <td>
-                                    <a href="{{ route('pengajar.edit', $item->id) }}" class="btn btn-info btn-sm mr-1">Edit</a>
-                                    <form action="{{ route('kel-mentor.destroy', $item->id) }}" method="post" class="d-inline">
+                                    <a href="{{ route('kel-kememberan.edit', $item->id) }}" class="btn btn-info btn-sm mr-1">Edit</a>
+                                    <form action="{{ route('kel-kememberan.destroy', $item->id) }}" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-outline-danger btn-sm">
@@ -62,7 +64,9 @@
                                 </td>
                             </tr>
                         @empty
-                            <h5>Tidak Ada Data Mentor</h5>
+                            <tr class="text-center">
+                                <td colspan="5"><h5>Data Kememberan Kosong</h5></td>
+                            </tr>
                         @endforelse
                         {{ $items->links() }}
                     </tbody>
