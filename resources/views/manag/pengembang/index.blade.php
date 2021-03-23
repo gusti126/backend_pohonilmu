@@ -12,6 +12,14 @@
         <div class="col-6 text-right">
             <a href="{{ route('kel-pengembang.create') }}" class="btn btn-primary">Tambah Pengembang</a>
         </div>
+        <div class="col-12">
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success alert-block my-2">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ $message }}</strong>
+                </div>
+            @endif
+        </div>
     </div>
      <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -35,8 +43,9 @@
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>{{ App\Mentor::where('user_id', $item->id)->count() }}</td>
-                                <td>
-                                    <a href="{{ route('pengajar.edit', $item->id) }}" class="btn btn-info btn-sm mr-1">Edit</a>
+                                <td class="text-center">
+                                    <a href="{{ route('kel-pengembang.show', $item->id) }}" class="btn btn-info btn-sm">Detail</a>
+                                    <a href="{{ route('kel-pengembang.edit', $item->id) }}" class="btn btn-primary btn-sm mx-3">Edit</a>
                                     <form action="{{ route('kel-mentor.destroy', $item->id) }}" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')

@@ -55,12 +55,18 @@
                         </div>
                         <div class="col-md-4">
                             <label for="">Pengembang</label>
-                            <select name="user_id" id="" class="form-control">
+                            {{-- <select name="user_id" id="" class="form-control">
                                 <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
                                 @foreach ($pengembang as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
-                            </select>
+                            </select> --}}
+                            <select class="selectpicker form-control" data-live-search="true" name="user_id">
+                            <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
+                            @foreach ($pengembang as $item)
+                                <option data-tokens="{{ $item->name }}" value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                         </div>
                         <div class="col-md-6">
                             <button type="submit" class="btn btn-primary">Simpan Mentor</button>
@@ -72,6 +78,8 @@
 @endsection
 
 @push('script')
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
    <script src="{{ url('backend/vendor/vue/vue.js') }}"></script>
     <script>
 
@@ -91,4 +99,13 @@
             }
         });
     </script>
+@endpush
+
+@push('style')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <style>
+        .selectpicker{
+            border: 1px solid #d1d3e2 !important;
+        }
+    </style>
 @endpush

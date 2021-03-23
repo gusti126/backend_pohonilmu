@@ -28,9 +28,11 @@ class KelasController extends Controller
         //     dd($m->course);
         // }
         // dd($mentor);
+        $allkelas = Course::with('kategori')->paginate(10);
 
         return view('pages.kelas.index', [
-            'items' => $mentor
+            'items' => $mentor,
+            'all_kelas' => $allkelas
         ]);
     }
 
@@ -42,11 +44,13 @@ class KelasController extends Controller
     public function create()
     {
         $data = Mentor::where('user_id', Auth::user()->id)->get();
+        $mentorAll = Mentor::get();
         $kategori = Kategori::get();
 
         return view('pages.kelas.create', [
             'items' => $data,
-            'kategori' => $kategori
+            'kategori' => $kategori,
+            'mentor_all' => $mentorAll
         ]);
     }
 
@@ -103,12 +107,14 @@ class KelasController extends Controller
         $data = Course::findOrFail($id);
         // dd($data);
         $mentor = Mentor::where('user_id', Auth::user()->id)->get();
+        $mentorAll = Mentor::get();
         $kategori = Kategori::get();
 
         return view('pages.kelas.edit', [
             'kelas' => $data,
             'mentor' => $mentor,
-            'kategori' => $kategori
+            'kategori' => $kategori,
+            'mentor_all' => $mentorAll
         ]);
     }
 

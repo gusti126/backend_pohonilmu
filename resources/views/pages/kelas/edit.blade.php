@@ -32,14 +32,26 @@
                                 <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image" @change="changeFile">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <label for="">Pilih Mentor</label>
-                            <select class="form-control" name="mentor_id">
-                                @foreach ($mentor as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @if (Auth::user()->role === 'pengembang')
+                            <div class="col-md-6">
+                                <label for="">Pilih Mentor</label>
+                                <select class="form-control" name="mentor_id">
+                                    @foreach ($mentor as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
+                        @if (Auth::user()->role === 'admin')
+                            <div class="col-md-6">
+                                <label for="">Pilih Mentor</label>
+                                <select class="form-control" name="mentor_id">
+                                    @foreach ($mentor_all as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
                         <div class="col-md-3">
                             <label for="">Pilih Kategori Utama</label>
                             <select class="form-control" name="kategori_id" v-model="pick" @change="onChange($event)">

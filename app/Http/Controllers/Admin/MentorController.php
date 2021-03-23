@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Course;
 use App\Http\Controllers\Controller;
 use App\Mentor;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -81,9 +82,11 @@ class MentorController extends Controller
     {
         $data = Mentor::findOrFail($id);
         // dd($data);
+        $user = User::where('role', 'pengembang')->get();
 
         return view('pages.mentor.edit', [
-            'item' => $data
+            'item' => $data,
+            'users' => $user
         ]);
     }
 

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Manag;
 
+use App\Course;
 use App\Http\Controllers\Controller;
+use App\Mentor;
+use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -44,7 +47,22 @@ class ManagPengembangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'rekening_gm' => 'required|string'
+        ]);
+        $data = $request->all();
+        // dd($data);
+        $user = User::findOrfail($data['id_user']);
+        // dd($user);
+        $user->update([
+            'role' => 'pengembang',
+            'rekening_gm' => $data['rekening_gm']
+        ]);
+
+        return redirect()->route('kel-pengembang.index')->with('success', 'pengembang berhasil di daftarkan');
+        // $pengembang->update([
+        //     ''
+        // ])
     }
 
     /**
@@ -55,7 +73,25 @@ class ManagPengembangController extends Controller
      */
     public function show($id)
     {
-        //
+        $pengembang = User::where('role', 'pengembang')->with('profile')->findOrFail($id);
+        // dd($pengembang);
+        $mentor = Mentor::where('user_id', $pengembang->id)->get();
+        $total = 0;
+        foreach($mentor as $m)
+        {
+            $course = Course::where('mentor_id', $m->id)->withCount('myCourse')->get();
+            foreach($course as $c)
+            {
+                $total += $c->my_course_count;
+            }
+        }
+        $total *= 100;
+        // dd($total);
+
+        return view('manag.pengembang.detail', [
+            'pendapatan' => $total,
+            'item' => $pengembang
+        ]);
     }
 
     /**
@@ -66,7 +102,11 @@ class ManagPengembangController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::where('role', 'pengembang')->with('profile')->findOrFail($id);
+
+        return view('manag.pengembang.edit', [
+            'item' => $user
+        ]);
     }
 
     /**
@@ -78,7 +118,20 @@ class ManagPengembangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        $user = User::findOrFail($id);
+        if($request->file('image'))
+        {
+            $image = $request->file('image')->store(
+            'assets/pengembang', 'public');
+                // dd($data);
+            $data['image'] = url('storage/'.$image);
+            $profile = Profile::where('id', $user->id)->update([
+                'image' => $data['image']
+            ]);
+        }
+
+        return redirect()->route('kel-pengembang.index')->with('success', 'data pengembang berhasil di update');
     }
 
     /**

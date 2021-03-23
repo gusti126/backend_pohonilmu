@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="card shadow p-4">
-        <form action="{{ route('pengajar.update', $item->id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('kel-pengembang.update', $item->id) }}" method="post" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group">
@@ -24,27 +24,12 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="">Nama</label>
-                        <input type="text" class="form-control" value="{{ $item->nama }}" name="nama">
+                        <input type="text" class="form-control" value="{{ $item->name }}" name="nama">
                     </div>
                     <div class="col-md-4">
                         <label for="">Email</label>
                         <input type="email" class="form-control" value="{{ $item->email }}" name="email">
                     </div>
-                    <div class="col-md-4">
-                        <label for="">Profession</label>
-                        <input type="text" class="form-control" value="{{ $item->profesi }}" name="profesi">
-                    </div>
-                    @if (Auth::user()->role === 'admin')
-                        <div class="col-md-4">
-                            <label for="">Pengembang</label>
-                            <select name="user_id" class="form-control">
-                                <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    @endif
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -69,7 +54,7 @@
         var vm = new Vue({
             el : "#app",
             data : {
-                gambar: '{{ $item->image }}',
+                gambar: '{{ $item->profile->image }}',
             },
             mounted(){
                 console.log(this.gambar);
