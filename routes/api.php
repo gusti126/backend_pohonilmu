@@ -14,14 +14,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login' , 'ApiAuthController@login');
+Route::post('register', 'ApiAuthController@register');
+
+Route::middleware('auth:api')->group(function () {
+    // user
+    Route::get('profile', 'ApiUserController@profile');
+    Route::post('logout', 'ApiAuthController@logout');
+
+    // my course
+    Route::get('my-course', 'MyCourseController@index');
+    Route::post('my-course/create', 'MyCourseController@create');
+
+    // order
+    Route::post('order/create', 'ApiOrderController@create');
+
+    // berlangganan
+    Route::post('berlangganan/create', 'ApiBerlanggananController@create');
+
 });
+
+
 
 // user
 Route::get('user', 'ApiUserController@index');
 Route::get('user/{id}', 'ApiUserController@show');
-Route::get('profile', 'ApiUserController@profile');
+
 // referal di controller user
 Route::post('referal/cari', 'ApiUserController@cariReferal');
 Route::post('point/tambah', 'ApiUserController@tambahPoint');
@@ -31,9 +49,6 @@ Route::resource('mentor', 'MentorController');
 Route::resource('course', 'CourseController');
 Route::resource('chapter', 'ChapterController');
 Route::resource('lesson', 'LessonController');
-Route::post('my-course/create', 'MyCourseController@create');
-Route::get('my-course', 'MyCourseController@index');
-Route::post('mentor/email/', 'MentorController@getByEmailMentoer');
 
 // review
 Route::get('review', 'ReviewController@index');
@@ -52,8 +67,6 @@ Route::get('kememberan/{id}', 'ApiKememberanController@show');
 // berlangganan
 Route::get('berlangganan', 'ApiBerlanggananController@index');
 Route::delete('berlangganan/{id}', 'ApiBerlanggananController@destroy');
-Route::post('berlangganan/create', 'ApiBerlanggananController@create');
 
 // order
-Route::post('order/create', 'ApiOrderController@create');
 Route::post('webhook', 'ApiOrderController@midtransHandler');

@@ -7,6 +7,7 @@ use App\Course;
 use App\Http\Controllers\Controller;
 use App\Lesson;
 use App\Mentor;
+use App\User;
 use Illuminate\Http\Request;
 
 class PendapatanKelasController extends Controller
@@ -19,6 +20,7 @@ class PendapatanKelasController extends Controller
         $counM = Mentor::count();
         $counC = Chapter::count();
         $countL = Lesson::count();
+        $counP = User::where('role', 'pengembang')->count();
         $BayaraMentor = 0;
         $pendapatan = 0;
 
@@ -30,7 +32,8 @@ class PendapatanKelasController extends Controller
         }
 
         $BayaraMentor *= 100;
-        $pendapatan *= 1000;
+        // $pendapatan *= 1000;
+        $pendapatan = TransaksiSukses();
         $sisaUang = $pendapatan - $BayaraMentor;
         // dd('pendapatan = '.$pendapatan, 'bayaran semua mentor = '. $BayaraMentor, 'Total Pendapatan = '.$sisaUang);
         return view('manag.kelas.pendapata', [
@@ -39,6 +42,7 @@ class PendapatanKelasController extends Controller
             'pendapatan' => $pendapatan,
             'sisa_uang' => $sisaUang,
             'count_kelas' => $counK,
+            'count_pengembang' => $counP,
             'count_mentor' => $counM,
             'count_chapter' => $counC,
             'count_lesson' => $countL

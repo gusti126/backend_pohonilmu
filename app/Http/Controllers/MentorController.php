@@ -171,47 +171,5 @@ class MentorController extends Controller
         ], 200);
     }
 
-    public function getByEmailMentoer(Request $request)
-    {
-        $rules = [
-            'email' => 'string|email|required'
-        ];
-        $data = $request->all();
-        $email = $request->input('email');
-        $validator = Validator::make($data, $rules);
-        if($validator->fails()){
-            return response()->json([
-                'status' => 'error',
-                'message' => $validator->errors(),
-            ], 400);
-        }
 
-        $mentor = Mentor::where('email', $email)->withCount('course')->with('course')->first();
-        // $mentor = Mentor::where('')
-        if(!$mentor)
-        {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'data mentor tidak ada'
-            ], 404);
-        }
-        $total = 0;
-        $course = Course::where('mentor_id', $mentor->id)->withCount('myCourse')->first();
-        $total = $course->my_course_count*100;
-        // dd($course);
-        // foreach($course as $m)
-        // {
-        //     $j = $m->my_course_count;
-        //     $total += $j;
-        // }
-
-        // dd($total);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'data mentor sesuai email',
-            'data' => $mentor,
-            'jumlah_pendapatan' => $total
-        ], 200);
-    }
 }

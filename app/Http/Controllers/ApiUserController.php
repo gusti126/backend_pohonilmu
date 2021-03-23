@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\Hadiah;
+use App\Mentor;
 use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ApiUserController extends Controller
@@ -39,19 +42,38 @@ class ApiUserController extends Controller
         ], 200);
     }
 
-    public function profile(Request $request)
+    public function profile()
     {
-        $userId = $request->input('user_id');
-        $profile = Profile::query();
-        $profile->when($userId, function($query) use ($userId) {
-            return $query->where('user_id', '=', $userId);
-        });
+
+        $data = User::where('id', Auth::user()->id)->with('profile')->first();
+        $isMentor = false;
+        $mycourse = null;
+        $pendapatan = null;
+        $mentor = Mentor::where('email', Auth::user()->email)->first();
+        if($mentor)
+        {
+            $isMentor = $mentor;
+            $course = Course::where('mentor_id', $mentor->id)->withCount('myCourse')->get();
+            $mycourse = $course;
+            // dd($course);
+            foreach($course as $c)
+            {
+                $p = $c->my_course_count;
+                $pendapatan += $p;
+            }
+        }
+        $pendapatan *= 100;
+        // dd($pendapatan);
 
         return response()->json([
             'status' => 'success',
-            'message' => 'data profile',
-            'data' => $profile->get()
+            'message' => 'my profile user',
+            'data' => $data,
+            'isMentor' => $isMentor,
+            'myCourse' => $mycourse,
+            'pendapatan' => $pendapatan,
         ], 200);
+
 
 
     }

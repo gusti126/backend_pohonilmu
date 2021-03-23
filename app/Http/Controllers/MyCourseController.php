@@ -8,24 +8,45 @@ use App\MyCourse;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class MyCourseController extends Controller
 {
-    public function index(Request $request)
-    {
-        $myCourses = MyCourse::query()->with('course');
+    // public function index(Request $request)
+    // {
+    //     $myCourses = MyCourse::query()->with('course');
 
-        $userId = $request->query('user_id');
-        $myCourses->when($userId, function($query) use ($userId) {
-            return $query->where('user_id', '=', $userId);
-        });
+    //     $userId = $request->query('user_id');
+    //     $myCourses->when($userId, function($query) use ($userId) {
+    //         return $query->where('user_id', '=', $userId);
+    //     });
+
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'data' => $myCourses->get()
+    //     ]);
+    // }
+
+    public function index()
+    {
+        $myCourse = MyCourse::where('user_id', Auth::user()->id)->with('course')->get();
+        if(!$myCourse)
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'user belum bergabung ke kelas'
+            ], 200);
+        }
 
         return response()->json([
             'status' => 'success',
-            'data' => $myCourses->get()
-        ]);
+            'message' => 'data list my course',
+            'data' => $myCourse
+        ], 200);
+
     }
+
     public function create(Request $request)
     {
         $rules = [

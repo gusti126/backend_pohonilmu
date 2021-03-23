@@ -75,11 +75,15 @@
             <div class="col-md-4">
                 <div class="card">
                 <div class="card-body">
-                    <img
-                    src="{{ url('front/images/logo2 (2).png') }}"
-                    alt="..."
-                    class="img-fluid img-login"
-                    />
+                    <div class="row justify-content-center text-center">
+                        <div class="col-12">
+                            <img
+                                src="{{ url('backend/img/logo.png') }}"
+                                alt="..."
+                                class="img-fluid img-login w-50"
+                                />
+                        </div>
+                    </div>
                     <h5 class="card-title">Login </h5>
                     <div class="card-text">
                     <form method="POST" action="{{ route('login') }}">

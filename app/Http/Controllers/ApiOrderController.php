@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Berlangganan;
 use App\Kememberan;
 use App\Order;
 use App\PaymentLog;
@@ -11,6 +12,17 @@ use Illuminate\Http\Request;
 
 class ApiOrderController extends Controller
 {
+    public function index()
+    {
+        $data = Order::get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'list data order',
+            'data' => $data
+        ], 200);
+    }
+
     public function create(Request $request)
     {
         $user = $request->input('user');
@@ -170,6 +182,11 @@ class ApiOrderController extends Controller
                 ]);
 
             }
+
+            $berlangganan = Berlangganan::create([
+                'user_id' => $order->user_id,
+                'kememberan_id' => $order->kememberan_id
+            ]);
 
         }
 

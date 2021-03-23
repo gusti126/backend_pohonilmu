@@ -1,5 +1,6 @@
 <?php
 
+use App\Order;
 use Illuminate\Support\Facades\Http;
 
 // get berlangganan sesuai user id
@@ -104,4 +105,18 @@ function getPenukarHadiah()
             'message' => 'service member page availeble'
         ];
     }
+}
+
+function TransaksiSukses()
+{
+    $data_count_harga = Order::with('kememberan')->where('status', 'success')->get();
+    // dd($data_count_harga);
+    $total = 0;
+    foreach($data_count_harga as $h)
+    {
+        $t = $h->kememberan->harga;
+        $total += $t;
+    }
+
+    return $total;
 }

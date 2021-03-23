@@ -17,6 +17,8 @@ Route::get('/', 'Admin\DashboardController@index')->middleware('auth');
 
 Route::prefix('admin')->middleware(['auth', 'admin'])
 ->group(function(){
+    // pengembang
+    Route::resource('kel-pengembang', 'Manag\ManagPengembangController');
     Route::resource('kel-mentor', 'Manag\KelMentorController');
     Route::resource('kel-kememberan', 'Manag\KememberanController');
 
@@ -24,8 +26,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])
     Route::get('hadiah', 'Manag\HadiahController@index')->name('index-hadiah');
     Route::get('hadiah/create', 'Manag\HadiahController@create')->name('create-hadiah');
     Route::post('hadiah/store', 'Manag\HadiahController@store')->name('hadiah-store');
-    Route::get('hadiaj/delete/{id}', 'Manag\HadiahController@delete')->name('delete-hadiah');
-    Route::get('pendapatan', 'Manag\PendapatanKelasController@index')->name('pendapatan');
+    Route::get('hadiah/delete/{id}', 'Manag\HadiahController@delete')->name('delete-hadiah');
+
+    Route::get('kel-pendapatan', 'Manag\PendapatanKelasController@index')->name('pendapatan');
+    Route::get('kel-transaksi', 'Manag\ManagTransaksiController@index')->name('kel-transaksi');
 
 });
 

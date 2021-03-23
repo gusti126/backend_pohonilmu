@@ -5,7 +5,7 @@
                     @if (Auth::user()->role === 'admin')
                         Management
                     @else
-                        Penegmbang
+                        Pengembang
                     @endif
                 </div>
             </a>
@@ -26,9 +26,27 @@
                         <span>Kememberan</span>
                     </a>
                 </li>
+                <hr class="sidebar-divider my-0">
             @endif
-            <hr class="sidebar-divider my-0">
-            <!-- Nav Item - Dashboard -->
+
+            @if (Auth::user()->role === 'admin')
+                <li class="nav-item {{ (request()->is('admin/kel-transaksi*')) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('kel-transaksi') }}">
+                        <span>Transaksi</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider my-0">
+            @endif
+
+            @if (Auth::user()->role === 'admin')
+                <li class="nav-item {{ (request()->is('admin/kel-pengembang*')) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('kel-pengembang.index') }}">
+                        <span>Pengembang</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider my-0">
+            @endif
+
             <li class="nav-item {{ (request()->is('pengembang/pengajar*')) ? 'active' : '' }}">
 
                 @if (Auth::user()->role === 'admin')

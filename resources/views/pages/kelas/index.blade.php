@@ -7,7 +7,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            <h1>Kelas Page Ma</h1>
+            <h4>Kelas Page</h4>
         </div>
         <div class="col-md-6 text-right">
             <a href="{{ route('kelas.create') }}" class="btn btn-primary">Tambah Kelas</a>
@@ -53,7 +53,7 @@
         </div>
        </div>
     @empty
-        <h1>Anda Belum Mempunyai Kelas</h1>
+        <h4>Anda Belum Mempunyai Kelas</h4>
     @endforelse
     {{ $items->links() }}
 @endsection
