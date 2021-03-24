@@ -36,7 +36,7 @@
                         <p style="font-weight: bold; margin: unset;">{{ $item->note }}</p>
                         {{-- <p>Total Yang Menukarkan Hadiah {{ $item['penukaran_hadiah_count'] }}</p> --}}
                        <div class="text-center">
-                            <a href="" class="btn btn-primary">Ubah</a>
+                            <a href="{{ route('edit-hadiah', $item->id) }}" class="btn btn-primary">Ubah</a>
                         <a href="{{ route('delete-hadiah', $item->id) }}" class="btn btn-outline-danger ml-5">Delete</a>
                        </div>
 

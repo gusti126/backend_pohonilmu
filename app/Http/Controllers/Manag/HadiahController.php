@@ -49,6 +49,33 @@ class HadiahController extends Controller
         return redirect()->route('index-hadiah')->with('success', 'data hadiah berhasil di tambahkan');
     }
 
+    public function edit($id)
+    {
+        $data = Hadiah::findOrFail($id);
+
+        return view('manag.point.edit', [
+            'item' => $data
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+    $data = $request->all();
+      $hadiah = Hadiah::findOrFail($id);
+      if($request->file('image'))
+      {
+          $image = $request->file('image')->store(
+            'assets/hadiah', 'public');
+            // dd($data);
+        $data['image'] = url('storage/'.$image);
+      }
+    //   dd($data);
+    $hadiah->fill($data);
+    $hadiah->save();
+
+    return redirect()->route('index-hadiah')->with('success', 'data hadiah berhasil di update');
+    }
+
     public function delete($id)
     {
         $data = deleteHadiah($id);

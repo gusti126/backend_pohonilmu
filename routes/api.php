@@ -21,16 +21,15 @@ Route::middleware('auth:api')->group(function () {
     // user
     Route::get('profile', 'ApiUserController@profile');
     Route::post('logout', 'ApiAuthController@logout');
-
     // my course
     Route::get('my-course', 'MyCourseController@index');
     Route::post('my-course/create', 'MyCourseController@create');
-
     // order
     Route::post('order/create', 'ApiOrderController@create');
-
     // berlangganan
     Route::post('berlangganan/create', 'ApiBerlanggananController@create');
+    // tukar hadiah
+    Route::post('hadiah/tukar', 'ApiHadiahController@tukarHadiah');
 
 });
 
