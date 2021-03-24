@@ -3,7 +3,7 @@
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('pengajar.index') }}">
                 <div class="sidebar-brand-text" style="color: gold">
                     @if (Auth::user()->role === 'admin')
-                        Management
+                        Management Admin
                     @else
                         Pengembang
                     @endif
