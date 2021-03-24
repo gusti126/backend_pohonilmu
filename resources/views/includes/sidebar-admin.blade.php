@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
-                <div class="sidebar-brand-text" style="color: gold">Management</div>
+                <div class="sidebar-brand-text" style="color: gold">Management Admin</div>
             </a>
             <li class="nav-item {{ (request()->is('pengembang/dashboard')) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('dashboard') }}">
