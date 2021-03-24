@@ -6,10 +6,22 @@
 
 @section('content')
     <div class="row my-3">
-        <div class="col-md-6">
-            <h5 style="font-weight: bold">Jumlah Hadiah {{ $total_hadiah }}</h5>
+        <div class="col-md-9">
+            <div class="card p-3">
+                <div class="row">
+                    <div class="col border-right">
+                        <h6 >Jumlah Hadiah {{ $total_hadiah }}</h6>
+                    </div>
+                    <div class="col border-right">
+                        <h6 >Status Penukaran Sukses {{ $CpenukaranS }}</h6>
+                    </div>
+                    <div class="col">
+                        <h6 >Status Penukaran Pending {{ $CpenukaranP }}</h6>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col-md-3 text-right">
             <a href="{{ route('create-hadiah') }}" class="btn btn-primary">Tambah Hadiah</a>
         </div>
     </div>
@@ -47,6 +59,7 @@
         <div class="col-12 my-4">
             {{ $items->links() }}
         </div>
+
     </div>
     <!-- DataTales Example -->
      {{-- <div class="card shadow mb-4">
@@ -81,4 +94,37 @@
         </div>
     </div> --}}
 
+    <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Data Tables Penukaran Hadiah</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Status</th>
+                                <th>User</th>
+                                <th>Hadiah</th>
+                                <th>Jumlah Point Hadiah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($tukar_hadiah as $item)
+                                <tr>
+                                    <td>{{ $item->status }}</td>
+                                    <td>{{ $item->user->name }}</td>
+                                    <td>{{ $item->hadiah->note }}</td>
+                                    <td>{{ $item->hadiah->jumlah_point }}</td>
+                                </tr>
+                            @empty
+                                <h5>Tidak Ada Penukaran Hadiah</h5>
+                            @endforelse
+                            {{ $tukar_hadiah->links() }}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 @endsection

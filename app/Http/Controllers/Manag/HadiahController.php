@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manag;
 
 use App\Hadiah;
 use App\Http\Controllers\Controller;
+use App\TukarHadiah;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -15,9 +16,15 @@ class HadiahController extends Controller
     {
         $data = Hadiah::paginate(6);
         $total= Hadiah::count();
+        $penukaran_hadiah = TukarHadiah::with('user', 'hadiah')->paginate(10);
+        $penukaran_hadiah_suksess = TukarHadiah::where('status', 'sukses')->count();
+        $penukaran_hadiah_pending = TukarHadiah::where('status', 'pending')->count();
         return view('manag.point.index', [
             'items' => $data,
-            'total_hadiah' => $total
+            'total_hadiah' => $total,
+            'tukar_hadiah' => $penukaran_hadiah,
+            'CpenukaranS' => $penukaran_hadiah_suksess,
+            'CpenukaranP' => $penukaran_hadiah_pending,
         ]);
 
     }
