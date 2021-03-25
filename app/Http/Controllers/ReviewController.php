@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Review;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -67,14 +68,13 @@ class ReviewController extends Controller
         }
 
         $userId = $request->input('user_id');
-        $user = getUser($userId);
-
-        if($user['status'] === 'error')
+        $user = User::find($userId);
+        if(!$user)
         {
             return response()->json([
                 'status' => 'error',
-                'message' => $user['message']
-            ], $user['http_code']);
+                'message' => 'id user tidak ada'
+            ], 404);
         }
 
         $isExistReview = Review::where('course_id', '=', $courseId)
