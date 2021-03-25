@@ -54,7 +54,7 @@ class ApiAuthController extends Controller
        $rules = [
             'name' => 'required|string',
              'no_tlp' => 'required',
-             'jenis_kelamin' => 'string|required',
+             'jenis_kelamin' => 'string|required|in:Laki - laki,Perempuan',
              'email' => 'required|unique:users|email',
              'password' => 'required|min:6',
              'alamat' => 'required|string',
