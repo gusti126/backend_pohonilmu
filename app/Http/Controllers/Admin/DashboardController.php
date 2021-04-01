@@ -28,7 +28,7 @@ class DashboardController extends Controller
             }
             $courseCount += $m->course_count;
         }
-        $bayaran = 1000*4/100*$total;
+        $bayaran = 500*$total;
         // dd($courseCount);
         return view('dashboard.pengembang', [
             'items' => $mentor,

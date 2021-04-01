@@ -22,13 +22,14 @@ Route::prefix('admin')->middleware(['auth', 'admin'])
     Route::resource('kel-mentor', 'Manag\KelMentorController');
     Route::resource('kel-kememberan', 'Manag\KememberanController');
 
-
+    // hadiah
     Route::get('hadiah', 'Manag\HadiahController@index')->name('index-hadiah');
     Route::get('hadiah/create', 'Manag\HadiahController@create')->name('create-hadiah');
     Route::post('hadiah/store', 'Manag\HadiahController@store')->name('hadiah-store');
     Route::get('hadiah/edit/{id}', 'Manag\HadiahController@edit')->name('edit-hadiah');
     Route::put('hadiah/update/{id}', 'Manag\HadiahController@update')->name('update-hadiah');
     Route::get('hadiah/delete/{id}', 'Manag\HadiahController@delete')->name('delete-hadiah');
+    Route::get('hadiah/update/status/{id}', 'Manag\HadiahController@hendleSuksessHadiah')->name('hendle-hadiah-sukses');
 
     Route::get('kel-pendapatan', 'Manag\PendapatanKelasController@index')->name('pendapatan');
     Route::get('kel-transaksi', 'Manag\ManagTransaksiController@index')->name('kel-transaksi');

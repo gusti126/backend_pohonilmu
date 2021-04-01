@@ -16,7 +16,7 @@ class HadiahController extends Controller
     {
         $data = Hadiah::paginate(6);
         $total= Hadiah::count();
-        $penukaran_hadiah = TukarHadiah::with('user', 'hadiah')->paginate(10);
+        $penukaran_hadiah = TukarHadiah::with('user', 'hadiah')->orderBy('status', 'ASC')->paginate(10);
         $penukaran_hadiah_suksess = TukarHadiah::where('status', 'sukses')->count();
         $penukaran_hadiah_pending = TukarHadiah::where('status', 'pending')->count();
         return view('manag.point.index', [
@@ -67,7 +67,7 @@ class HadiahController extends Controller
 
     public function update(Request $request, $id)
     {
-    $data = $request->all();
+        $data = $request->all();
       $hadiah = Hadiah::findOrFail($id);
       if($request->file('image'))
       {
@@ -88,5 +88,16 @@ class HadiahController extends Controller
         $data = deleteHadiah($id);
 
         return redirect()->route('index-hadiah')->with('success', 'data hadiah berhasil di hapus');
+    }
+
+    public function hendleSuksessHadiah($id)
+    {
+        $hadiah = TukarHadiah::findOrFail($id);
+        $status = 'sukses';
+
+        $hadiah->update([
+            'status' => $status
+        ]);
+        return redirect()->route('index-hadiah')->with('success', 'data hadiah berhasil di update');
     }
 }

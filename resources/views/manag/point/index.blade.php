@@ -108,6 +108,7 @@
                                 <th>User</th>
                                 <th>Hadiah</th>
                                 <th>Jumlah Point Hadiah</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -117,6 +118,10 @@
                                     <td>{{ $item->user->name }}</td>
                                     <td>{{ $item->hadiah->note }}</td>
                                     <td>{{ $item->hadiah->jumlah_point }}</td>
+                                    <td>
+                                        <a href="" class="btn btn-info btn-sm">Detail</a>
+                                        <a href="{{ route('hendle-hadiah-sukses', $item->id) }}" class="btn btn-success btn-sm">Ubah Sukses</a>
+                                    </td>
                                 </tr>
                             @empty
                                 <h5>Tidak Ada Penukaran Hadiah</h5>

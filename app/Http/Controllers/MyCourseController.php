@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Berlangganan;
 use App\Course;
+use App\Lesson;
 use App\MyCourse;
 use App\User;
 use Carbon\Carbon;
@@ -51,6 +52,7 @@ class MyCourseController extends Controller
     {
         $rules = [
             'user_id' => 'required|integer',
+            'lesson_id' => 'required|integer',
             'course_id' => 'required|integer'
         ];
         $data = $request->all();
@@ -71,6 +73,16 @@ class MyCourseController extends Controller
                 'message' => 'course id tidak di temukan'
             ], 404);
         }
+        $lessonId = $request->input('lesson_id');
+        $lesson = Lesson::find($lessonId);
+        if(!$lesson)
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'lesson tidak ada'
+            ], 404);
+        }
+
 
         // cek user id berlangganan atau tidak
         $userId = $request->input('user_id');
@@ -100,13 +112,8 @@ class MyCourseController extends Controller
         // dd(date($date));
         if (Carbon::now() > $waktuHabis )
         {
-            $deleteBerlangganan = deletBerlangganan($getUser['data']['id']);
-            if($deleteBerlangganan['status'] === 'error')
-            {
-                return response()->json([
-                    $deleteBerlangganan
-                ]);
-            }
+            $berlangganan->delete();
+            MyCourse::where('user_id', $userId)->delete();
             return response()->json([
                 'status' => 'error',
                 'message' => 'masa berlangganan anda habis lakukan order kembali'
@@ -129,11 +136,11 @@ class MyCourseController extends Controller
 
         // cek duplikasi data
         $isExistMyCourse =  MyCourse::where('course_id', '=', $courseId)
-        ->where('user_id', '=', $userId)->exists();
+        ->where('user_id', '=', $userId)->where('lesson_id', '=', $lessonId)->exists();
         if($isExistMyCourse){
             return response()->json([
                 'status' => 'error',
-                'message' => 'User sudah mengambil course ini'
+                'message' => 'User sudah mengambil video dalam course ini'
             ], 409);
         }
 

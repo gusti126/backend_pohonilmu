@@ -1,22 +1,25 @@
 @extends('layouts.admin')
 
 @section('title')
-    Dashboard
+    Dashboard Pendapatan
 @endsection
 
 @section('content')
 <h3 class="my-3">Dashboard Management</h3>
     <div class="row">
+        {{-- pendapatan --}}
         <div class="col-md-4 my-1">
             <div class="card shadow border-left-success p-3">
                 <h5>Pendapatan @currency($pendapatan) </h5>
             </div>
         </div>
+        {{-- bayar semua mentor --}}
         <div class="col-md-4 my-1">
             <div class="card shadow border-left-info p-3">
                 <h5>Bayar Semua Mentor @currency($bayar_mentor) </h5>
             </div>
         </div>
+        {{-- sisa uang --}}
         <div class="col-md-4 my-1">
             <div class="card shadow border-left-warning p-3">
                 <h5>Sisa Uang @currency($sisa_uang)</h5>

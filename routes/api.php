@@ -41,7 +41,7 @@ Route::get('user/{id}', 'ApiUserController@show');
 
 // referal di controller user
 Route::post('referal/cari', 'ApiUserController@cariReferal');
-Route::post('point/tambah', 'ApiUserController@tambahPoint');
+// Route::post('point/tambah', 'ApiUserController@tambahPoint');
 
 Route::resource('kategori', 'KategoriController');
 Route::resource('mentor', 'MentorController');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Manag;
 
+use App\Berlangganan;
 use App\Chapter;
 use App\Course;
 use App\Http\Controllers\Controller;
@@ -22,13 +23,12 @@ class PendapatanKelasController extends Controller
         $countL = Lesson::count();
         $counP = User::where('role', 'pengembang')->count();
         $BayaraMentor = 0;
-        $pendapatan = 0;
+
 
         foreach($kelas as $k)
         {
             $t = $k->my_course_count;
             $BayaraMentor += $t;
-            $pendapatan += $t;
         }
 
         $BayaraMentor *= 100;

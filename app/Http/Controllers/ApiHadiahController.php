@@ -64,8 +64,10 @@ class ApiHadiahController extends Controller
         $rules = [
             'user_id' => 'integer|required',
             'hadiah_id' => 'integer|required',
+            'detail_penerima' => 'required'
         ];
         $data = $request->all();
+        $data['detail_penerima'] = $request->input('detail_penerima');
 
         $validator = Validator::make($data, $rules);
         if($validator->fails()){
@@ -101,7 +103,7 @@ class ApiHadiahController extends Controller
                 'message' => 'point user kurang'
             ], 400);
         }
-        $status = 'sukses';
+        $status = 'pending';
         if($jPointHadiah > 400)
         {
             $status = 'pending';
@@ -112,11 +114,7 @@ class ApiHadiahController extends Controller
             'point' => $point
         ]);
 
-        $metadata = [
-            'user' => $user,
-            'hadiah' => $hadiah,
-            'date' => date(Carbon::now())
-        ];
+        $metadata = $data['detail_penerima'];
         $penukaran_hadiah = TukarHadiah::create([
             'user_id' => $userId,
             'hadiah_id' => $hadiah->id,
@@ -126,7 +124,7 @@ class ApiHadiahController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'penukaran point berhasil',
+            'message' => 'penukaran point berhasil data akan di proses',
             'data' => $penukaran_hadiah
         ], 200);
 

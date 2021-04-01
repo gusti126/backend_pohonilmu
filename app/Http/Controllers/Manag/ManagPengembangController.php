@@ -76,7 +76,9 @@ class ManagPengembangController extends Controller
         $pengembang = User::where('role', 'pengembang')->with('profile')->findOrFail($id);
         // dd($pengembang);
         $mentor = Mentor::where('user_id', $pengembang->id)->get();
+        // total gabung kelas
         $total = 0;
+        // total semua kelas
         foreach($mentor as $m)
         {
             $course = Course::where('mentor_id', $m->id)->withCount('myCourse')->get();
@@ -85,7 +87,7 @@ class ManagPengembangController extends Controller
                 $total += $c->my_course_count;
             }
         }
-        $total *= 100;
+        $total *= 500;
         // dd($total);
 
         return view('manag.pengembang.detail', [
