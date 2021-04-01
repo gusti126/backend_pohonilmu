@@ -84,12 +84,12 @@
                                 />
                         </div>
                     </div>
-                    <h5 class="card-title">Login </h5>
+                    <h5 class="card-title">Login</h5>
                     <div class="card-text">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group ">
-                            <label for="email" class="">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="">Masukan {{ __('E-Mail Address') }}</label>
 
                             <div class="">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
