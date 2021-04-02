@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Berlangganan;
 use App\Course;
 use App\Hadiah;
 use App\Mentor;
@@ -62,6 +63,7 @@ class ApiUserController extends Controller
                 $pendapatan += $p;
             }
         }
+        $berlangganan = Berlangganan::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->with('kememberan')->first();
         $pendapatan *= 100;
         // dd($pendapatan);
 
@@ -72,6 +74,7 @@ class ApiUserController extends Controller
             'isMentor' => $isMentor,
             'myCourse' => $mycourse,
             'pendapatan' => $pendapatan,
+            'berlangganan' => $berlangganan
         ], 200);
 
 
