@@ -26,6 +26,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('my-course/create', 'MyCourseController@create');
     // order
     Route::post('order/create', 'ApiOrderController@create');
+    // order by tripay
+    Route::post('tripay/create', 'ApiTripayController@creata');
     // berlangganan
     Route::post('berlangganan/create', 'ApiBerlanggananController@create');
     // tukar hadiah
@@ -67,5 +69,7 @@ Route::get('kememberan/{id}', 'ApiKememberanController@show');
 Route::get('berlangganan', 'ApiBerlanggananController@index');
 Route::delete('berlangganan/{id}', 'ApiBerlanggananController@destroy');
 
-// order
+// order callback midtrans
 Route::post('webhook', 'ApiOrderController@midtransHandler');
+// callback tripay
+Route::post('tripay/callback', 'ApiTripayController@handle');
