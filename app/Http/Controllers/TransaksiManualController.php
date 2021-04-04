@@ -47,7 +47,7 @@ class TransaksiManualController extends Controller
         if($request->input('referal'))
         {
             $data['referal'] = $request->input('referal');
-            if($data['referal'] === $user->profile->refeal)
+            if($data['referal'] === $user->profile->referal)
             {
                 $data['referal'] = null;
             }
