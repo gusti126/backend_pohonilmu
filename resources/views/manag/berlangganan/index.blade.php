@@ -30,6 +30,7 @@
                         <tr class="text-center">
                             <th>Status</th>
                             <th>Nama User</th>
+                            <th>Email</th>
                             <th>Kode Refrensi</th>
                             <th>Tipe Keanggotaan</th>
                             <th>Bukti Pembayaran</th>
@@ -40,6 +41,7 @@
                             <tr>
                                 <td>{{ $transaksi->status }}</td>
                                 <td>{{ $transaksi->user->name }}</td>
+                                <td>{{ $transaksi->user->email }}</td>
                                 @if ($transaksi->referal === null)
                                     <td>Tidak Memasukan Kode</td>
                                 @else
