@@ -51,6 +51,7 @@
                                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModalCenter{{ $transaksi->id }}">
                                     Bukti
                                     </button>
+                                    <a href="{{ route('set-gagal-transaksi', $transaksi->id) }}" class="btn btn-outline-danger btn-sm">Set Gagal</a>
                                 </td>
                                 <td></td>
                                 @include('includes.modal.transaki-manual')

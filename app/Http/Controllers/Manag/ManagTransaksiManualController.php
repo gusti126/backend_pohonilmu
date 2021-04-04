@@ -40,4 +40,14 @@ class ManagTransaksiManualController extends Controller
 
         return redirect()->route('kel-berlangganan.index')->with('success', 'data transaksi berhasil di ubah');
     }
+
+    public function setFailed($id)
+    {
+        $transaksi_manual = TransaksiManual::find($id);
+        $transaksi_manual->update([
+            'status' => 'gagal'
+        ]);
+
+        return redirect()->route('kel-berlangganan.index')->with('success', 'data transaki berhasil di ubah menjadi gagal/failed');
+    }
 }
