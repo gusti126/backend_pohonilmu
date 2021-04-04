@@ -34,6 +34,11 @@ Route::prefix('admin')->middleware(['auth', 'admin'])
     Route::get('kel-pendapatan', 'Manag\PendapatanKelasController@index')->name('pendapatan');
     Route::get('kel-transaksi', 'Manag\ManagTransaksiController@index')->name('kel-transaksi');
 
+    // BERLANGGANAN
+    Route::resource('kel-berlangganan', 'Manag\ManagBerlanggananController');
+    // transaksi manual
+    Route::get('set-transaksi/{id}', 'Manag\ManagTransaksiManualController@setSuksess')->name('set-sukses-transaksi');
+
 });
 
 Route::prefix('pengembang')->middleware(['auth'])->group(function(){

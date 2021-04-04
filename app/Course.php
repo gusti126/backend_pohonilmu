@@ -23,7 +23,7 @@ class Course extends Model
 
     public function chapter()
     {
-        return $this->hasMany('App\chapter');
+        return $this->hasMany('App\Chapter');
     }
 
     public function review()

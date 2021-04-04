@@ -28,6 +28,14 @@
                 </li>
                 <hr class="sidebar-divider my-0">
             @endif
+            @if (Auth::user()->role === 'admin')
+                <li class="nav-item {{ (request()->is('admin/kel-berlangganan*')) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('kel-berlangganan.index') }}">
+                        <span>Berlangganan</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider my-0">
+            @endif
 
             @if (Auth::user()->role === 'admin')
                 <li class="nav-item {{ (request()->is('admin/kel-transaksi*')) ? 'active' : '' }}">

@@ -41,7 +41,7 @@
             @endif
         </div>
         @foreach ($items as $item)
-            <div class="col-md-4">
+            <div class="col-md-4 my-3">
                 <div class="card shadow">
                     <img src="{{ $item->image }}" alt="" class="img-fluid">
                     <div class="card-body-hadiah p-2">

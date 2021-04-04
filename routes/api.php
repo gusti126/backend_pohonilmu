@@ -32,6 +32,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('berlangganan/create', 'ApiBerlanggananController@create');
     // tukar hadiah
     Route::post('hadiah/tukar', 'ApiHadiahController@tukarHadiah');
+    // transaksi manual
+    Route::post('transaksi-manual/create', 'TransaksiManualController@create');
 
 });
 
