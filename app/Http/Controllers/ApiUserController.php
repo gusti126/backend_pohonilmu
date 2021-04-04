@@ -51,7 +51,7 @@ class ApiUserController extends Controller
         $isMentor = false;
         $mycourse = null;
         $pendapatan = null;
-        $riwayat_transaksi = null;
+        // $riwayat_transaksi = null;
         $mentor = Mentor::where('email', Auth::user()->email)->first();
         if($mentor)
         {
@@ -65,11 +65,13 @@ class ApiUserController extends Controller
                 $pendapatan += $p;
             }
         }
+
         $transaksi = TransaksiManual::where('id', Auth::user()->id)->get();
-        if($transaksi)
+        if(!$transaksi)
         {
-            $riwayat_transaksi = $transaksi;
+            $transaksi = null;
         }
+
         $berlangganan = Berlangganan::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->with('kememberan')->first();
         $pendapatan *= 100;
         // dd($pendapatan);
@@ -82,7 +84,7 @@ class ApiUserController extends Controller
             'myCourse' => $mycourse,
             'pendapatan' => $pendapatan,
             'berlangganan' => $berlangganan,
-            'riwayat_transaksi' => $riwayat_transaksi
+            'riwayat_transaksi' => $transaksi
         ], 200);
 
 
