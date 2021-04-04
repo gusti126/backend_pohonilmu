@@ -158,4 +158,5 @@ class ApiUserController extends Controller
             'data' => $profile
         ], 200);
     }
+
 }

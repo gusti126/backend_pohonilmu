@@ -51,6 +51,7 @@ class TransaksiManualController extends Controller
             {
                 $data['referal'] = null;
             }
+
         }
         $data['user_id'] = $userId;
         // dd($data);
@@ -71,5 +72,22 @@ class TransaksiManualController extends Controller
         ], 200);
 
 
+    }
+
+    public function isPending($id)
+    {
+        $transaksi = TransaksiManual::where('user_id', $id)->first();
+        if($transaksi)
+        {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'ada data transaksi pending'
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'tidak ada data transaksi pending'
+        ], 200);
     }
 }
