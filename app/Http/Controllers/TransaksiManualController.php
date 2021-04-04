@@ -54,6 +54,14 @@ class TransaksiManualController extends Controller
         }
         $data['user_id'] = $userId;
         // dd($data);
+        $isExitsTransaksi = TransaksiManual::where('user_id', Auth::user()->id)->where('status', 'pending')->exists();
+        if($isExitsTransaksi)
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Ada Transaksi Pending di Riwayat Transaksi. Anda Belum Bisa Melakukan Transaksi'
+            ], 200);
+        }
 
         $bukti_transaksi = TransaksiManual::create($data);
         return response()->json([
