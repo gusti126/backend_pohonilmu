@@ -66,7 +66,7 @@ class ApiUserController extends Controller
             }
         }
 
-        $transaksi = TransaksiManual::where('id', Auth::user()->id)->get();
+        $transaksi = TransaksiManual::where('user_id', Auth::user()->id)->get();
         if(!$transaksi)
         {
             $transaksi = null;
