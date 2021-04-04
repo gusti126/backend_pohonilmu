@@ -34,6 +34,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('hadiah/tukar', 'ApiHadiahController@tukarHadiah');
     // transaksi manual
     Route::post('transaksi-manual/create', 'TransaksiManualController@create');
+    Route::post('transaksi-manual/cek-pending/{id}', 'TransaksiManualController@isPending');
+
 
 });
 
