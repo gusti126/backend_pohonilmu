@@ -46,4 +46,8 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Berlangganan');
     }
+    public function transaksiManual()
+    {
+        return $this->hasMany('App\TransaksiManual');
+    }
 }
