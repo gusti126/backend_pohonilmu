@@ -7,6 +7,7 @@ use App\Course;
 use App\Hadiah;
 use App\Mentor;
 use App\Profile;
+use App\TransaksiManual;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,7 @@ class ApiUserController extends Controller
         $isMentor = false;
         $mycourse = null;
         $pendapatan = null;
+        $riwayat_transaksi = null;
         $mentor = Mentor::where('email', Auth::user()->email)->first();
         if($mentor)
         {
@@ -63,6 +65,11 @@ class ApiUserController extends Controller
                 $pendapatan += $p;
             }
         }
+        $transaksi = TransaksiManual::where('id', Auth::user()->id)->get();
+        if($transaksi)
+        {
+            $riwayat_transaksi = $transaksi;
+        }
         $berlangganan = Berlangganan::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->with('kememberan')->first();
         $pendapatan *= 100;
         // dd($pendapatan);
@@ -74,7 +81,8 @@ class ApiUserController extends Controller
             'isMentor' => $isMentor,
             'myCourse' => $mycourse,
             'pendapatan' => $pendapatan,
-            'berlangganan' => $berlangganan
+            'berlangganan' => $berlangganan,
+            'riwayat_transaksi' => $riwayat_transaksi
         ], 200);
 
 
