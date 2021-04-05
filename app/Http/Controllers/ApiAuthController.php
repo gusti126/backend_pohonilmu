@@ -31,14 +31,23 @@ class ApiAuthController extends Controller
         if($profile)
         {
             $user_no_tlp = User::where('id', $profile->id)->first();
-            $token = $user_no_tlp->createToken('myToken')->accessToken;
+            if (Hash::check($data['password'], $user_no_tlp->password)) {
+                $token = $user_no_tlp->createToken('myToken')->accessToken;
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'login berhasil dengan nomor telepon',
+                    'data' => $user_no_tlp,
+                    'token' => $token
+                ], 200);
+            }
+            // dd($data);
+            // dd(Hash::check($data['password'], $user_no_tlp->password));
 
             return response()->json([
-                'status' => 'success',
-                'message' => 'login berhasil dengan nomor telepon',
-                'data' => $user_no_tlp,
-                'token' => $token
-            ], 200);
+                'status' => 'error',
+                'message' => 'password salah'
+            ], 401);
         }
 
         if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']]))
