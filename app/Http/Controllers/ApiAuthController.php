@@ -14,7 +14,7 @@ class ApiAuthController extends Controller
     public function login(Request $request)
     {
         $rules = [
-            'email' => 'required|email',
+            'email' => 'required',
             'password' => 'required|string',
         ];
         $data = $request->all();
@@ -27,6 +27,19 @@ class ApiAuthController extends Controller
                 'message' => $validator->errors(),
             ], 400);
         }
+        $profile = Profile::where('no_tlp', $data['email'])->first();
+        if($profile)
+        {
+            $user_no_tlp = User::where('id', $profile->id)->first();
+            $token = $user_no_tlp->createToken('myToken')->accessToken;
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'login berhasil dengan nomor telepon',
+                'data' => $user_no_tlp,
+                'token' => $token
+            ], 200);
+        }
 
         if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']]))
         {
@@ -36,7 +49,7 @@ class ApiAuthController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'login berhasil',
+                'message' => 'login dengan email berhasil',
                 'data' => $user,
                 'token' => $data['token']
             ], 200);
