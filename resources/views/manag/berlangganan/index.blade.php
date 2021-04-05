@@ -7,7 +7,7 @@
 @section('content')
     <div class="row">
         <div class="col-6">
-            <h2>Management Berlangganan</h2>
+            <h2>Management Transaksi Manual</h2>
         </div>
         <div class="col-12">
             @if ($message = Session::get('success'))
@@ -18,50 +18,118 @@
             @endif
         </div>
     </div>
-     <!-- DataTales Example -->
+     <!-- table pending-->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"> Data Tables Request Berlangganan</h6>
+            <h6 class="m-0 font-weight-bold text-warning"> Transaksi Pending</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" >
                     <thead>
                         <tr class="text-center">
                             <th>Status</th>
-                            <th>Nama User</th>
                             <th>Email</th>
-                            <th>Kode Refrensi</th>
                             <th>Tipe Keanggotaan</th>
                             <th>Bukti Pembayaran</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($transaksi_manual as $transaksi)
+                        @forelse ($transaksi_pending as $tp)
                             <tr>
-                                <td>{{ $transaksi->status }}</td>
-                                <td>{{ $transaksi->user->name }}</td>
-                                <td>{{ $transaksi->user->email }}</td>
-                                @if ($transaksi->referal === null)
-                                    <td>Tidak Memasukan Kode</td>
-                                @else
-                                    <td>{{ $transaksi->referal }}</td>
-                                @endif
-
-                                <td>{{ $transaksi->kememberan->nama }}</td>
+                                <td class="text-warning">{{ $tp->status }}</td>
+                                <td>{{ $tp->user->email }}</td>
+                                <td>{{ $tp->kememberan->nama }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModalCenter{{ $transaksi->id }}">
-                                    Bukti
+                                    <button type="button" class="btn btn-info btn-sm m-2" data-toggle="modal" data-target="#exampleModalCenter{{ $tp->id }}">
+                                    Cek Pembayaran
                                     </button>
-                                    <a href="{{ route('set-gagal-transaksi', $transaksi->id) }}" class="btn btn-outline-danger btn-sm">Set Gagal</a>
+                                    @include('includes.modal.transaki-manual')
                                 </td>
-                                <td></td>
-                                @include('includes.modal.transaki-manual')
                             </tr>
                         @empty
-                            <h4>Data request berlangganan kosong</h4>
+                            <h4>Data Transaksi Pending kosong</h4>
                         @endforelse
                     </tbody>
+                    {{ $transaksi_pending->links() }}
+                </table>
+            </div>
+        </div>
+    </div>
+
+     <!-- table sukses-->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-danger"> Transaksi gagal</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" >
+                    <thead>
+                        <tr class="text-center">
+                            <th>Status</th>
+                            <th>Email</th>
+                            <th>Tipe Keanggotaan</th>
+                            <th>Bukti Pembayaran</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($transaksi_gagal as $tg)
+                            <tr>
+                                <td class="text-danger">{{ $tg->status }}</td>
+                                <td>{{ $tg->user->email }}</td>
+                                <td>{{ $tg->kememberan->nama }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-sm m-2" data-toggle="modal" data-target="#exampleModalCenter{{ $tg->id }}">
+                                    Cek Pembayaran
+                                    </button>
+                                </td>
+                                @include('includes.modal.transaki-manual-gagal')
+                            </tr>
+                        @empty
+                            <h4>Data Transaksi Gagal kosong</h4>
+                        @endforelse
+                    </tbody>
+                    {{ $transaksi_gagal->links() }}
+                </table>
+            </div>
+        </div>
+    </div>
+
+     <!-- table sukses-->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-success"> Transaksi Sukses</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" >
+                    <thead>
+                        <tr class="text-center">
+                            <th>Status</th>
+                            <th>Email</th>
+                            <th>Tipe Keanggotaan</th>
+                            <th>Bukti Pembayaran</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($transaksi_sukses as $ts)
+                            <tr>
+                                <td class="text-success">{{ $ts->status }}</td>
+                                <td>{{ $ts->user->email }}</td>
+                                <td>{{ $ts->kememberan->nama }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-sm m-2" data-toggle="modal" data-target="#exampleModalCenter{{ $ts->id }}">
+                                    Cek Pembayaran
+                                    </button>
+                                </td>
+                                @include('includes.modal.transaki-manual-sukses')
+                            </tr>
+                        @empty
+                            <h4>Data Transaksi Suksess kosong</h4>
+                        @endforelse
+                    </tbody>
+                    {{ $transaksi_sukses->links() }}
                 </table>
             </div>
         </div>

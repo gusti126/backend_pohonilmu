@@ -36,7 +36,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])
 
     // BERLANGGANAN
     Route::resource('kel-berlangganan', 'Manag\ManagBerlanggananController');
+
     // transaksi manual
+    Route::get('transaksi', 'Manag\ManagTransaksiManualController@index')->name('home-transaksi-manual');
     Route::get('set-transaksi/{id}', 'Manag\ManagTransaksiManualController@setSuksess')->name('set-sukses-transaksi');
     Route::get('set-transaksi-gagal/{id}', 'Manag\ManagTransaksiManualController@setFailed')->name('set-gagal-transaksi');
 

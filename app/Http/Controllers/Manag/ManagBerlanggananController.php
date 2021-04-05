@@ -16,13 +16,7 @@ class ManagBerlanggananController extends Controller
      */
     public function index()
     {
-        $transaksi_manual = TransaksiManual::with('user', 'kememberan')->orderBy('status', 'ASC')->paginate(10);;
-        $berlangganan = Berlangganan::paginate(10);
-
-        return view('manag.berlangganan.index', [
-            'transaksi_manual' => $transaksi_manual,
-            'berlangganan' => $berlangganan
-        ]);
+        //
     }
 
     /**
