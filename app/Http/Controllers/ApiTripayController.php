@@ -46,7 +46,7 @@ class ApiTripayController extends Controller
         $order = OrderTripay::create([
             'user_id' => Auth::user()->id,
             'kememberan_id' => $kememberan->id,
-            'metadata' => $request->input('referal')
+            'referal' => $request->input('referal')
         ]);
 
 
@@ -85,7 +85,9 @@ class ApiTripayController extends Controller
         $no_refernsi = $response['data']['reference'];
         $jumlah_tagihan = $response['data']['amount'];
         $snap_url = $response['data']['checkout_url'];
+        $method = $response['data']['method'];
 
+        $order->method = $method;
         $order->no_referensi = $no_refernsi;
         $order->kode_pembayaran = $kode_pempayaran;
         $order->jumlah_tagihan = $jumlah_tagihan;

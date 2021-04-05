@@ -28,7 +28,8 @@ class ManagTransaksiManualController extends Controller
     public function setSuksess($id)
     {
         $transaksi_manual = TransaksiManual::with('kememberan')->find($id);
-        $count_transaksi_manual = TransaksiManual::count();
+        $count_transaksi_manual = TransaksiManual::where('status', 'sukses')->count();
+        // dd($count_transaksi_manual);
         $double_point = 0;
         if($count_transaksi_manual <= 1000)
         {

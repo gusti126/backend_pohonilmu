@@ -25,6 +25,11 @@
                 {{ $tg->kememberan->nama }}
             </div>
 
+            <div class="col-md-6"><span style="font-weight: bold">Harga Kememberan</span></div>
+            <div class="col-md-6">
+                 @currency($tg->kememberan->harga)
+            </div>
+
             <div class="col-md-6"><span style="font-weight: bold">Kode Referal</span></div>
             <div class="col-md-6">
                 @if ($tg->referal === null)

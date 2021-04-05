@@ -24,6 +24,10 @@
             <div class="col-md-6">
                 {{ $ts->kememberan->nama }}
             </div>
+            <div class="col-md-6"><span style="font-weight: bold">Harga Kememberan</span></div>
+            <div class="col-md-6">
+                @currency($ts->kememberan->harga)
+            </div>
 
             <div class="col-md-6"><span style="font-weight: bold">Kode Referal</span></div>
             <div class="col-md-6">
