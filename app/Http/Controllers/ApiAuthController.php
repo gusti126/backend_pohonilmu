@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ApiAuthController extends Controller
 {
@@ -94,10 +95,16 @@ class ApiAuthController extends Controller
          $phone = $request->input('phone');
          $password = $request->input('password');
          $hasPassword = Hash::make($password);
-
+         $poolEmail = Str::random(22);
+         $poolEmailExist = User::where('email', $poolEmail)->first();
+        //  dd($poolEmailExist);
+        if($poolEmailExist)
+        {
+            $poolEmail = Str::random(25);
+        }
          $user = User::create([
              'name' => $name,
-             'email' => 'tidak ada email',
+             'email' => $poolEmail,
              'phone' => $phone,
              'password' => $hasPassword
 
