@@ -27,30 +27,28 @@ class ApiAuthController extends Controller
                 'message' => $validator->errors(),
             ], 400);
         }
-        // $profile = Profile::where('no_tlp', $data['email'])->first();
-        // if($profile)
-        // {
-        //     $user_no_tlp = User::where('id', $profile->id)->first();
-        //     if (Hash::check($data['password'], $user_no_tlp->password)) {
-        //         $token = $user_no_tlp->createToken('myToken')->accessToken;
+        $phone = User::where('phone', $data['email'])->first();
+        if($phone)
+        {
+            if (Hash::check($data['password'], $phone->password)) {
+                $token = $phone->createToken('myToken')->accessToken;
 
-        //         return response()->json([
-        //             'status' => 'success',
-        //             'message' => 'login berhasil dengan nomor telepon',
-        //             'data' => $user_no_tlp,
-        //             'token' => $token
-        //         ], 200);
-        //     }
-        //     // dd($data);
-        //     // dd(Hash::check($data['password'], $user_no_tlp->password));
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'login berhasil dengan nomor telepon',
+                    'data' => $phone,
+                    'token' => $token
+                ], 200);
+            }
+            // dd($data);
+            // dd(Hash::check($data['password'], $user_no_tlp->password));
 
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'message' => 'password salah'
-        //     ], 401);
-        // }
-
-        if(Auth::attempt(['phone' => $data['phone'], 'password' => $data['password']]))
+            return response()->json([
+                'status' => 'error',
+                'message' => 'password salah'
+            ], 401);
+        }
+        if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']]))
         {
             $user = Auth::user();
             $token = $user->createToken('myToken')->accessToken;
