@@ -18,10 +18,11 @@
             @endif
         </div>
     </div>
+
      <!-- table pending-->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-warning"> Transaksi Pending</h6>
+            <h6 class="m-0 font-weight-bold text-warning"> Transaksi Pending {{ $transaksi_pending->count() }}</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -60,7 +61,7 @@
      <!-- table sukses-->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-danger"> Transaksi gagal</h6>
+            <h6 class="m-0 font-weight-bold text-danger"> Transaksi gagal {{ $transaksi_gagal->count() }}</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -99,7 +100,7 @@
      <!-- table sukses-->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-success"> Transaksi Sukses</h6>
+            <h6 class="m-0 font-weight-bold text-success"> Transaksi Sukses {{ $transaksi_sukses->count() }}</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">

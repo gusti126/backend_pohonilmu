@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Berlangganan;
 use App\Course;
-use App\Hadiah;
 use App\Mentor;
+use App\OrderTripay;
 use App\Profile;
 use App\TransaksiManual;
 use App\User;
@@ -159,6 +159,33 @@ class ApiUserController extends Controller
             'message' => 'point berhasil di tambahkan',
             'data' => $profile
         ], 200);
+    }
+
+    public function riwayatReferal()
+    {
+        $userId = Auth::user()->id;
+        $user = User::with('profile')->find($userId);
+        $referalUser = $user->profile->referal;
+        $riwayat_referal = null;
+
+        $from_transaksi_manual = TransaksiManual::where('referal', $referalUser)->get();
+        if($from_transaksi_manual)
+        {
+            $riwayat_referal['referal_transaksi_manul'] = $from_transaksi_manual;
+        }
+        $from_tripay = OrderTripay::where('referal', $referalUser)->get();
+        if($from_tripay)
+        {
+            $riwayat_referal['referal_paytri'] = $from_tripay;
+        }
+        // dd($riwayat_referal);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data riwayat refrensi referal',
+            'data' => $riwayat_referal
+        ], 200);
+
     }
 
 }

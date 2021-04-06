@@ -53,7 +53,7 @@ class ApiTripayController extends Controller
 
         $apiKey = env('API_KEY_TRIPAY');
         $privateKey = env('PRIVAT_KEY_TRIPAY');
-        $merchantCode = 'T3328';
+        $merchantCode = 'T3385';
         $merchantRef = $order->id;
         $amount = $kememberan->harga;
 
@@ -62,7 +62,7 @@ class ApiTripayController extends Controller
         'merchant_ref'      => $merchantRef,
         'amount'            => $amount,
         'customer_name'     => Auth::user()->name,
-        'customer_email'    => Auth::user()->email,
+        'customer_email'    => 'cs@pohonpengetahuantambahilmu.co.id',
         'customer_phone'    => $user->profile->no_tlp,
         'order_items'       => [
             [
@@ -80,7 +80,9 @@ class ApiTripayController extends Controller
 
         // $response = Http::withToken('Bearer'.$apiKey)->post('https://payment.tripay.co.id/api-sandbox/transaction/create', $data);
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer '.$apiKey,])->post('https://payment.tripay.co.id/api-sandbox/transaction/create', $data);
+            'Authorization' => 'Bearer '.$apiKey])->post('https://payment.tripay.co.id/api/transaction/create', $data);
+        // dd($response);
+        // return $response;
         $kode_pempayaran = $response['data']['pay_code'];
         $no_refernsi = $response['data']['reference'];
         $jumlah_tagihan = $response['data']['amount'];
@@ -108,7 +110,7 @@ class ApiTripayController extends Controller
 
 	public function handle(Request $request)
 	{
-        $privateKey = env('PRIVAT_KEY_TRIPAY');
+        $privateKey = env('PRIVAT_KEY_TRIPAY_PRO');
 		// ambil callback signature
 		$callbackSignature = $request->server('HTTP_X_CALLBACK_SIGNATURE') ?? '';
 

@@ -14,7 +14,7 @@ class ApiAuthController extends Controller
     public function login(Request $request)
     {
         $rules = [
-            'email' => 'required',
+            // 'email' => 'required',
             'password' => 'required|string',
         ];
         $data = $request->all();
@@ -27,30 +27,30 @@ class ApiAuthController extends Controller
                 'message' => $validator->errors(),
             ], 400);
         }
-        $profile = Profile::where('no_tlp', $data['email'])->first();
-        if($profile)
-        {
-            $user_no_tlp = User::where('id', $profile->id)->first();
-            if (Hash::check($data['password'], $user_no_tlp->password)) {
-                $token = $user_no_tlp->createToken('myToken')->accessToken;
+        // $profile = Profile::where('no_tlp', $data['email'])->first();
+        // if($profile)
+        // {
+        //     $user_no_tlp = User::where('id', $profile->id)->first();
+        //     if (Hash::check($data['password'], $user_no_tlp->password)) {
+        //         $token = $user_no_tlp->createToken('myToken')->accessToken;
 
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'login berhasil dengan nomor telepon',
-                    'data' => $user_no_tlp,
-                    'token' => $token
-                ], 200);
-            }
-            // dd($data);
-            // dd(Hash::check($data['password'], $user_no_tlp->password));
+        //         return response()->json([
+        //             'status' => 'success',
+        //             'message' => 'login berhasil dengan nomor telepon',
+        //             'data' => $user_no_tlp,
+        //             'token' => $token
+        //         ], 200);
+        //     }
+        //     // dd($data);
+        //     // dd(Hash::check($data['password'], $user_no_tlp->password));
 
-            return response()->json([
-                'status' => 'error',
-                'message' => 'password salah'
-            ], 401);
-        }
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'message' => 'password salah'
+        //     ], 401);
+        // }
 
-        if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']]))
+        if(Auth::attempt(['phone' => $data['phone'], 'password' => $data['password']]))
         {
             $user = Auth::user();
             $token = $user->createToken('myToken')->accessToken;
@@ -74,10 +74,9 @@ class ApiAuthController extends Controller
     public function register(Request $request)
     {
        $rules = [
-            'name' => 'required|string',
-             'no_tlp' => 'required',
+             'name' => 'required|string',
+             'phone' => "required|string|unique:users",
              'jenis_kelamin' => 'string|required|in:Laki - laki,Perempuan',
-             'email' => 'required|unique:users|email',
              'password' => 'required|min:6',
              'alamat' => 'required|string',
         ];
@@ -91,24 +90,28 @@ class ApiAuthController extends Controller
                 'message' => $validator->errors(),
             ], 400);
         }
+
         $name = $request->input('name');
          $email = $request->input('email');
+         $phone = $request->input('phone');
          $password = $request->input('password');
          $hasPassword = Hash::make($password);
 
          $user = User::create([
              'name' => $name,
-             'email' => $email,
+             'email' => 'tidak ada email',
+             'phone' => $phone,
              'password' => $hasPassword
 
          ]);
+
          $token = $user->createToken('myToken')->accessToken;
          $pool = '0123456789';
          $referal = substr(str_shuffle(str_repeat($pool, 5)), 0, 12);
          $profile = Profile::create([
              'user_id' => $user->id,
-             'tanggal_lahir' => $request->input('tanggal_lahir'),
-             'no_tlp' => $request->input('no_tlp'),
+            //  'tanggal_lahir' => $request->input('tanggal_lahir'),
+            //  'no_tlp' => $request->input('no_tlp'),
              'jenis_kelamin' => $request->input('jenis_kelamin'),
              'alamat' => $request->input('alamat'),
              'referal' => $referal,
@@ -122,6 +125,7 @@ class ApiAuthController extends Controller
              'token' => $token
          ], 200);
     }
+
 
     public function logout(Request $request)
     {
