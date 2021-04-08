@@ -64,7 +64,7 @@ class ApiAuthController extends Controller
         }else{
             return response()->json([
                 'status' => 'error',
-                'message' => 'gagal login',
+                'message' => 'gagal login email atau password salah',
 
             ], 401);
         }
@@ -79,9 +79,15 @@ class ApiAuthController extends Controller
              'password' => 'required|min:6',
              'alamat' => 'required|string',
         ];
+        $messages = [
+            'unique' => 'no :attribute sudah terdaftar',
+            'required' => ':attribute Harus di isi',
+            'min' => ':attribute harus diisi minimal :min karakter ya',
+            'max' => ':attribute harus diisi maksimal :max karakter ya' ,
+        ];
         $data = $request->all();
 
-        $validator = Validator::make($data, $rules);
+        $validator = Validator::make($data, $rules, $messages);
         if($validator->fails())
         {
             return response()->json([
