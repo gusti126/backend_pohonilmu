@@ -13,12 +13,17 @@ class ManagTransaksiManualController extends Controller
     public function index()
     {
         $transaksi_sukses = TransaksiManual::where('status', 'sukses')->with('user', 'kememberan')->orderBy('status', 'ASC')->paginate(10);
+        $transaksi_sukses_count = TransaksiManual::where('status', 'sukses')->count();
         $transaksi_pending = TransaksiManual::where('status', 'pending')->with('user', 'kememberan')->orderBy('id', 'DESC')->paginate(8);
         $transaksi_gagal = TransaksiManual::where('status', 'gagal')->with('user', 'kememberan')->orderBy('id', 'DESC')->paginate(8);
         // dd($transaksi_manual);
+        $total = TransaksiSukses();
+        // dd($total);
 
         return view('manag.berlangganan.index', [
+            'pendapatan' => TransaksiSukses(),
             'transaksi_sukses' => $transaksi_sukses,
+            'transaksi_sukses_count' => $transaksi_sukses_count,
             'transaksi_pending' => $transaksi_pending,
             'transaksi_gagal' => $transaksi_gagal,
 

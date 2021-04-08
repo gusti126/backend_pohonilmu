@@ -1,6 +1,7 @@
 <?php
 
 use App\Order;
+use App\TransaksiManual;
 use Illuminate\Support\Facades\Http;
 
 // get berlangganan sesuai user id
@@ -110,11 +111,17 @@ function getPenukarHadiah()
 function TransaksiSukses()
 {
     $data_count_harga = Order::with('kememberan')->where('status', 'success')->get();
+    $data_count_transaksi_manual = TransaksiManual::with('kememberan')->where('status', 'sukses')->get();
     // dd($data_count_harga);
     $total = 0;
     foreach($data_count_harga as $h)
     {
         $t = $h->kememberan->harga;
+        $total += $t;
+    }
+    foreach($data_count_transaksi_manual as $m)
+    {
+        $t = $m->kememberan->harga;
         $total += $t;
     }
 

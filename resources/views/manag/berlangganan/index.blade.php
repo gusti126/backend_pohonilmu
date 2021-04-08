@@ -18,6 +18,32 @@
             @endif
         </div>
     </div>
+    <div class="row my-3">
+        <div class="col-12">
+            <div class="total-transaksi">
+                <div class="card  rounded shadow-sm p-3">
+                    <div class="row">
+                        <div class="col-md-3 border-right text-success">
+                            <h4 class="h2">@currency($pendapatan)</h4>
+                            <p>Total Volume Transaksi</p>
+                        </div>
+                        <div class="col-md-3 border-right">
+                            <h4 class="h2">{{ $transaksi_sukses_count}}</h4>
+                            <p>Total Transaksi Sukses</p>
+                        </div>
+                        <div class="col-md-3 border-right">
+                            <h4 class="h2">{{ App\TransaksiManual::where('status', 'pending')->count() }}</h4>
+                            <p>Total Transaksi Pending</p>
+                        </div>
+                        <div class="col-md-3 text-danger">
+                            <h4 class="h2">{{ App\TransaksiManual::where('status', 'gagal')->count() }}</h4>
+                            <p>Total Transaksi Gagal</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
      <!-- table pending-->
     <div class="card shadow mb-4">
@@ -100,7 +126,7 @@
      <!-- table sukses-->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-success"> Transaksi Sukses {{ $transaksi_sukses->count() }}</h6>
+            <h6 class="m-0 font-weight-bold text-success"> Transaksi Sukses {{ $transaksi_sukses_count }}</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
