@@ -46,7 +46,7 @@
                                 <td class="text-center">
                                     <a href="{{ route('kel-pengembang.show', $item->id) }}" class="btn btn-info btn-sm">Detail</a>
                                     <a href="{{ route('kel-pengembang.edit', $item->id) }}" class="btn btn-primary btn-sm mx-3">Edit</a>
-                                    <form action="{{ route('kel-mentor.destroy', $item->id) }}" method="post" class="d-inline">
+                                    <form action="{{ route('kel-pengembang.destroy', $item->id) }}" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-outline-danger btn-sm">

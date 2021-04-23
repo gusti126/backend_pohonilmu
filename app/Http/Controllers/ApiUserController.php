@@ -91,6 +91,111 @@ class ApiUserController extends Controller
 
     }
 
+    public function updateProfile(Request $request)
+    {
+        $rules = [
+            // user : 'name', 'email', 'password', 'role', 'rekening_gm', 'phone'
+            'name' => 'string|required',
+            'email' => 'string|required',
+            'phone' => 'string|required',
+            // profile table : 'image', 'referal', 'user_id', 'no_tlp', 'alamat', 'tanggal_lahir', 'point', 'jenis_kelamin'
+            'alamat' => 'string|required',
+            'tanggal_lahir' => 'required',
+        ];
+        $data = $request->all();
+        $validator = Validator::make($data, $rules);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors(),
+            ], 400);
+        }
+
+        $userId = Auth::user()->id;
+        $user = User::with('profile')->find($userId);
+        $profile = Profile::where('user_id', $userId)->first();
+
+        $user->update([
+            'name' => $request->input('name'),
+        ]);
+
+        $profile->update([
+            'alamat' => $request->input('alamat'),
+            'tanggal_lahir' => $request->input('tanggal_lahir'),
+        ]);
+
+        // validasi email
+        $email_input = $request->input('email');
+        // dd(User::where('email', $email_input)->count() <= 0); hasilnya false
+        // cek ini itu milik user yang sedang login ?
+        if($email_input === $user->email)
+        {
+            // cek apakah email ini sudah pernah daftar
+            if(User::where('email', $email_input)->count() <= 1)
+            {
+                $user->update([
+                    'email' => $email_input
+                ]);
+            }
+        }else{
+            if(User::where('email', $email_input)->exists())
+            {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'gagal update email user telah di gunakan masukan email yang lain',
+                    'data' => $user
+                ], 400);
+            }
+            $user->update([
+                    'email' => $email_input
+            ]);
+        }
+
+        // validasi phone
+        $phone_input = $request->input('phone');
+        if($phone_input === $user->phone)
+        {
+            if(User::where('phone', $phone_input)->count() <= 1)
+            {
+                $user->update([
+                    'phone' => $phone_input
+                ]);
+            }
+        }else{
+            if(User::where('phone', $phone_input)->exists())
+            {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'gagal update nomor telepon telah di gunakan masukan nomor yang lain',
+                    'data' => $user
+                ], 400);
+            }
+
+            $user->update([
+                    'phone' => $phone_input
+                ]);
+        }
+
+        if($request->file('image'))
+        {
+            $image = $request->file('image')->store(
+                'assets/profile', 'public');
+            $data['image'] = url('storage/'.$image);
+
+            $profile->update([
+                'image' => $data['image'],
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data user berhasil di update',
+            'data' => $user,
+        ], 200);
+
+
+    }
+
     public function cariReferal(Request $request)
     {
         $rules = [

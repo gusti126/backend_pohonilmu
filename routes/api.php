@@ -20,6 +20,7 @@ Route::post('register', 'ApiAuthController@register');
 Route::middleware('auth:api')->group(function () {
     // user
     Route::get('profile', 'ApiUserController@profile');
+    Route::post('profile/update', 'ApiUserController@updateProfile');
     Route::get('riwayat-referal', 'ApiUserController@riwayatReferal');
     Route::post('logout', 'ApiAuthController@logout');
     // my course

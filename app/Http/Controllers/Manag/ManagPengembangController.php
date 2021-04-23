@@ -144,6 +144,11 @@ class ManagPengembangController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = User::findOrFail($id);
+        $data->update([
+            'role' => 'user'
+        ]);
+
+        return redirect()->route('kel-pengembang.index')->with('success', 'berhasil mencopot status pengembang');
     }
 }
