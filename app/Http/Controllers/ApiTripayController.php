@@ -19,10 +19,13 @@ class ApiTripayController extends Controller
     {
         $rules = [
             'kememberan_id' => 'integer|required',
+            'method_payment' => 'required|string|in:ALFAMART,ALFAMIDI,BNIVA,BRIVA,BCAVA,MANDIRIVA',
         ];
         $data = $request->all();
-
-        $validator = Validator::make($data, $rules);
+        $messages = [
+            'in' => ':attribute harus di isi kode antara berikut (ALFAMART, ALFAMIDI, BNIVA, BRIVA, BCAVA, MANDIRIVA)',
+        ];
+        $validator = Validator::make($data, $rules, $messages);
         if($validator->fails()){
             return response()->json([
                 'status' => 'error',
@@ -56,9 +59,11 @@ class ApiTripayController extends Controller
         $merchantCode = 'T3385';
         $merchantRef = $order->id;
         $amount = $kememberan->harga;
+        // untuk opsi pemilihan pembayaran
+        $method_payment = $request->input('method_payment');
 
         $data = [
-        'method'            => 'ALFAMART',
+        'method'            => $method_payment,
         'merchant_ref'      => $merchantRef,
         'amount'            => $amount,
         'customer_name'     => Auth::user()->name,
@@ -81,19 +86,21 @@ class ApiTripayController extends Controller
         // $response = Http::withToken('Bearer'.$apiKey)->post('https://payment.tripay.co.id/api-sandbox/transaction/create', $data);
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.$apiKey])->post('https://payment.tripay.co.id/api/transaction/create', $data);
-        // dd($response);
+        // dd(json_encode($response['data']['instructions'][0]['steps']));
         // return $response;
         $kode_pempayaran = $response['data']['pay_code'];
         $no_refernsi = $response['data']['reference'];
         $jumlah_tagihan = $response['data']['amount'];
         $snap_url = $response['data']['checkout_url'];
-        $method = $response['data']['method'];
+        $method = $response['data']['payment_method'];
+        $metadata = $response['data']['instructions'][0]['steps'];
 
         $order->method = $method;
         $order->no_referensi = $no_refernsi;
         $order->kode_pembayaran = $kode_pempayaran;
         $order->jumlah_tagihan = $jumlah_tagihan;
         $order->snap_url = $snap_url;
+        $order->metadata = json_encode($metadata);
 
         $order->save();
 
