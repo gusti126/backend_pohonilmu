@@ -20,13 +20,17 @@
             </div>
         @endif
         @forelse ($materi as $chapter)
-        <span style="font-weight: bold">{{ $chapter->nama }} <br> </span>
+        <span style="font-weight: bold; margin-bottom: 6px">{{ $chapter->nama }} <a href="{{ route('chapter-edit', $chapter->id) }}" class="text-info">Edit</a> | <a onclick="return confirm('Yakin Ingin di Hapus')" href="{{ route('chapter-hapus', $chapter->id) }}" class="text-danger">Hapus</a>
+
+            <br> </span>
             {{-- mengambuk data lesson perchapter --}}
             @foreach ($chapter->lesson as $item)
                 <div class="row">
                     <div class="col-12">
                         {{ $item->nama }} <a href="" class="mx-1 text-primary" data-toggle="modal" data-target="#tes{{ $item->id }}">Cek Video</a> | <a href="{{ route('edit-lesson', ['course_id' => $course_id, 'id' => $item->id]) }}" class="mx-1 text-info">Edit</a> |
-                        <a href="" class="mx-1 text-danger">Hapus</a>
+                        <a
+                         onclick="return confirm('Yakin Ingin di Hapus')"
+                         href="{{ route('hapus-lesson', $item->id) }}" class="mx-1 text-danger">Hapus</a>
                         <br>
                     </div>
                     {{-- modal cek video --}}
@@ -35,7 +39,7 @@
             @endforeach
             <div class="row">
                 <div class="col">
-                    <button class="btn btn-primary btn-sm my-1" data-toggle="modal" data-target="#tambahLesson{{ $chapter->id }}">Tambah Video Materi</button>
+                    <button class="btn btn-primary btn-sm my-1 mb-5" data-toggle="modal" data-target="#tambahLesson{{ $chapter->id }}">Tambah Video Materi</button>
                     {{-- tambah Materi Video --}}
                     @include('includes.modal.tambahMateri')
                 </div>

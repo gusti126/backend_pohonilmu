@@ -73,6 +73,14 @@ class MateriController extends Controller
 
     }
 
+    public function hapusLesson($id)
+    {
+        $lesson = Lesson::findOrFail($id);
+        $lesson->delete();
+
+        return redirect()->back()->with('success', 'materi berhasil di hapus');
+    }
+
     public function tambahBAB(Request $request)
     {
         $data = $request->all();
@@ -81,6 +89,35 @@ class MateriController extends Controller
 
         $request->session()->flash('success', 'BAB Materi Berhasil di Tambahkan');
         return Redirect::back();
+
+    }
+
+    public function editBAB($id)
+    {
+        $chapter = Chapter::findOrFail($id);
+
+        return view('pages.BAB.edit', [
+            'item' => $chapter
+        ]);
+    }
+
+    public function updateBAB(Request $request, $id)
+    {
+        $data = $request->all();
+        $chapter = Chapter::findOrFail($id);
+        $chapter->fill($data);
+        $chapter->save();
+
+        return redirect()->route('materi', $chapter->course_id)->with('success', 'BAB Materi Berhasil di Update');
+
+    }
+
+    public function hapusBAB($id)
+    {
+        $chapter = Chapter::findOrFail($id);
+        $chapter->delete();
+
+        return redirect()->back()->with('success', 'data bab berhasil di hapus');
 
     }
 }

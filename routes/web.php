@@ -49,11 +49,17 @@ Route::prefix('pengembang')->middleware(['auth'])->group(function(){
     Route::get('dashboard', 'Admin\DashboardController@index')->name('dashboard');
     Route::resource('kelas', 'Admin\KelasController');
     // materi
+    // chapter
     Route::post('kelas/bab/create', 'Admin\MateriController@tambahBAB')->name('chapter-create');
+    Route::get('kelas/bab/hapus/{id}', 'Admin\MateriController@hapusBAB')->name('chapter-hapus');
+    Route::get('kelas/bab/edit/{id}', 'Admin\MateriController@editBAB')->name('chapter-edit');
+    Route::put('kelas/bab/update/{id}', 'Admin\MateriController@updateBAB')->name('chapter-update');
+    // lesson
     Route::get('kelas/materi/{id}', 'Admin\MateriController@getMateri')->name('materi');
     Route::get('kelas/edit/{course_id}/{id}', 'Admin\MateriController@editLesson')->name('edit-lesson');
     Route::put('kelas/update/{course_id}/{id}', 'Admin\MateriController@updateLesson')->name('update-lesson');
     Route::post('kelas/lesson/create/{id}', 'Admin\MateriController@createLesson')->name('create-lesson');
+    Route::get('kelas/lesson/delete/{id}', 'Admin\MateriController@hapusLesson')->name('hapus-lesson');
 });
 // Route::resource('dasho', 'Admin\MentorController');
 Auth::routes();
