@@ -86,7 +86,7 @@ class ApiTripayController extends Controller
         // $response = Http::withToken('Bearer'.$apiKey)->post('https://payment.tripay.co.id/api-sandbox/transaction/create', $data);
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.$apiKey])->post('https://payment.tripay.co.id/api/transaction/create', $data);
-        // dd(json_encode($response['data']['instructions'][0]['steps']));
+        dd($response['data']);
         // return $response;
         $kode_pempayaran = $response['data']['pay_code'];
         $no_refernsi = $response['data']['reference'];
