@@ -121,7 +121,10 @@ class ApiTripayController extends Controller
 
 	public function handle(Request $request)
 	{
-        $privateKey = env('PRIVAT_KEY_TRIPAY_PRO');
+
+        // $privateKey = env('PRIVAT_KEY_TRIPAY_PRO');
+        $privateKey = env('PRIVAT_KEY_TRIPAY');
+
 		// ambil callback signature
 		$callbackSignature = $request->server('HTTP_X_CALLBACK_SIGNATURE') ?? '';
 
@@ -161,9 +164,10 @@ class ApiTripayController extends Controller
                     'user_id' => $order->user_id,
                     'kememberan_id' => $order->kememberan_id
                 ]);
-                if($order->metadata != null)
+
+                if($order->referal != null)
                 {
-                    $profile = Profile::where('referal', $order->metadata)->first();
+                    $profile = Profile::where('referal', $order->referal)->first();
                     $kememberanId = $order->kememberan_id;
                     $kememberan = Kememberan::find($kememberanId);
 
