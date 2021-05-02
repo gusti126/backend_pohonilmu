@@ -6,6 +6,7 @@ use App\Berlangganan;
 use App\Course;
 use App\Lesson;
 use App\MyCourse;
+use App\MyEpisode;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -14,24 +15,10 @@ use Illuminate\Support\Facades\Validator;
 
 class MyCourseController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     $myCourses = MyCourse::query()->with('course');
-
-    //     $userId = $request->query('user_id');
-    //     $myCourses->when($userId, function($query) use ($userId) {
-    //         return $query->where('user_id', '=', $userId);
-    //     });
-
-    //     return response()->json([
-    //         'status' => 'success',
-    //         'data' => $myCourses->get()
-    //     ]);
-    // }
 
     public function index()
     {
-        $myCourse = MyCourse::where('user_id', Auth::user()->id)->with('course')->get();
+        $myCourse = MyEpisode::where('user_id', Auth::user()->id)->with('course')->get();
         if(!$myCourse)
         {
             return response()->json([
@@ -51,7 +38,6 @@ class MyCourseController extends Controller
     public function create(Request $request)
     {
         $rules = [
-            'user_id' => 'required|integer',
             'lesson_id' => 'required|integer',
             'course_id' => 'required|integer'
         ];
@@ -65,6 +51,7 @@ class MyCourseController extends Controller
         }
 
         $courseId = $request->input('course_id');
+
         $course = Course::find($courseId);
         if(!$course)
         {
@@ -73,6 +60,9 @@ class MyCourseController extends Controller
                 'message' => 'course id tidak di temukan'
             ], 404);
         }
+
+
+
         $lessonId = $request->input('lesson_id');
         $lesson = Lesson::find($lessonId);
         if(!$lesson)
@@ -85,7 +75,7 @@ class MyCourseController extends Controller
 
 
         // cek user id berlangganan atau tidak
-        $userId = $request->input('user_id');
+        $userId = Auth::user()->id;
         $berlangganan = Berlangganan::where('user_id', $userId)->first();
         if(!$berlangganan)
         {
@@ -98,13 +88,7 @@ class MyCourseController extends Controller
         // dd($getUser->berlangganan->kememberan->akses_kelas);
         // dd($getUser['data']['member_page']['updated_at']);
         // dd($getUser['data']['id']);
-        if(!$getUser)
-        {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'data id user tidak ada'
-            ], 404);
-        }
+
 
         $p = Carbon::create(date($getUser->berlangganan->updated_at));
         $date = $p->addMonth();
@@ -113,7 +97,7 @@ class MyCourseController extends Controller
         if (Carbon::now() > $waktuHabis )
         {
             $berlangganan->delete();
-            MyCourse::where('user_id', $userId)->delete();
+            MyEpisode::where('user_id', $userId)->delete();
             return response()->json([
                 'status' => 'error',
                 'message' => 'masa berlangganan anda habis lakukan order kembali'
@@ -122,9 +106,10 @@ class MyCourseController extends Controller
 
         }
 
-        $TotalMyCourse = MyCourse::where('user_id', $userId)->count();
+        $TotalMyCourse = MyEpisode::where('user_id', $userId)->count();
         $maxGabung = $getUser->berlangganan->kememberan->akses_kelas;
         // dd($TotalMyCourse >= $maxGabung);
+        // cek batas limit akses kelas
         if($TotalMyCourse >= $maxGabung)
         {
             return response()->json([
@@ -135,7 +120,7 @@ class MyCourseController extends Controller
         }
 
         // cek duplikasi data
-        $isExistMyCourse =  MyCourse::where('course_id', '=', $courseId)
+        $isExistMyCourse =  MyEpisode::where('course_id', '=', $courseId)
         ->where('user_id', '=', $userId)->where('lesson_id', '=', $lessonId)->exists();
         if($isExistMyCourse){
             return response()->json([
@@ -144,8 +129,13 @@ class MyCourseController extends Controller
             ], 409);
         }
 
-        $myCourse = MyCourse::create($data);
-        $TotalMyCourse = MyCourse::where('user_id', $userId)->count();
+        // cek apakah lesson itu kepunyaan course
+
+
+        $data['user_id'] = $userId;
+        $myCourse = MyEpisode::create($data);
+        $TotalMyCourse = MyEpisode::where('user_id', $userId)->count();
+
         return response()->json([
             'status' => 'success',
             'message' => 'berhasil create my course',

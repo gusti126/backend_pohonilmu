@@ -30,6 +30,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('order/create', 'ApiOrderController@create');
     // order by tripay
     Route::post('tripay/create', 'ApiTripayController@creata');
+    Route::get('tripay/riwayat', 'ApiTripayController@riwayatTripay');
     // berlangganan
     Route::post('berlangganan/create', 'ApiBerlanggananController@create');
     // tukar hadiah

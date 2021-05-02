@@ -185,4 +185,18 @@ class ApiTripayController extends Controller
 
 		return "No action was taken";
 	}
+
+    public function riwayatTripay()
+    {
+        $userId = Auth::user()->id;
+        $tripay = OrderTripay::where('user_id', $userId)->get();
+        $jumlah = $tripay->count();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data riwayat transaksi tripay',
+            'jumlah_riwayat' => $jumlah,
+            'data' => $tripay
+        ], 200);
+    }
 }
