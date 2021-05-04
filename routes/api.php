@@ -48,15 +48,20 @@ Route::middleware('auth:api')->group(function () {
 Route::get('user', 'ApiUserController@index');
 Route::get('user/{id}', 'ApiUserController@show');
 
+// course
+Route::resource('course', 'CourseController');
+Route::resource('chapter', 'ChapterController');
+Route::resource('lesson', 'LessonController');
+Route::get('kelas/new', 'ApiCourseDuaController@kelasTerbaru');
+
+
 // referal di controller user
 Route::post('referal/cari', 'ApiUserController@cariReferal');
 // Route::post('point/tambah', 'ApiUserController@tambahPoint');
 
 Route::resource('kategori', 'KategoriController');
 Route::resource('mentor', 'MentorController');
-Route::resource('course', 'CourseController');
-Route::resource('chapter', 'ChapterController');
-Route::resource('lesson', 'LessonController');
+
 
 // review
 Route::get('review', 'ReviewController@index');
@@ -78,5 +83,6 @@ Route::delete('berlangganan/{id}', 'ApiBerlanggananController@destroy');
 
 // order callback midtrans
 Route::post('webhook', 'ApiOrderController@midtransHandler');
+
 // callback tripay
 Route::post('tripay/callback', 'ApiTripayController@handle');

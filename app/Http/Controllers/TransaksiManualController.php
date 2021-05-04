@@ -67,7 +67,7 @@ class TransaksiManualController extends Controller
         $bukti_transaksi = TransaksiManual::create($data);
         return response()->json([
             'status' => 'success',
-            'message' => 'data transaksi manual berhasil admin akan memprosesnya',
+            'message' => 'transaksi berhasil, admin akan memprosesnya',
             'data' => $bukti_transaksi
         ], 200);
 
