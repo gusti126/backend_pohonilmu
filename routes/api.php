@@ -38,7 +38,7 @@ Route::middleware('auth:api')->group(function () {
     // transaksi manual
     Route::post('transaksi-manual/create', 'TransaksiManualController@create');
     Route::post('transaksi-manual/cek-pending/{id}', 'TransaksiManualController@isPending');
-
+    Route::delete('transaksi/{id}', 'TransaksiManualController@destroy');
 
 });
 

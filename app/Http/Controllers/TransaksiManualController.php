@@ -74,6 +74,33 @@ class TransaksiManualController extends Controller
 
     }
 
+    public function destroy($id)
+    {
+        $data = TransaksiManual::find($id);
+        if(!$data)
+        {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'data review tidak di temukan'
+            ], 404);
+        }
+
+        if($data->status === 'sukses')
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' =>  'gagal hapus riwayat transaksi karena status transaksi sukses'
+            ], 400);
+        }
+
+        $data->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data review berhasil di delete'
+        ], 200);
+    }
+
     public function isPending($id)
     {
         $transaksi = TransaksiManual::where('user_id', $id)->first();
