@@ -80,7 +80,7 @@ class ApiTripayController extends Controller
             ]
         ],
         'callback_url'      => 'https://admin.pohonpengetahuantambahilmu.co.id/callback',
-        'return_url'        => 'https://admin.pohonpengetahuantambahilmu.co.id/',
+        'return_url'        => 'https://pohonpengetahuantambahilmu.co.id',
         'expired_time'      => (time()+(24*60*60)), // 24 jam
         'signature'         => hash_hmac('sha256', $merchantCode.$merchantRef.$amount, $privateKey)
         ];

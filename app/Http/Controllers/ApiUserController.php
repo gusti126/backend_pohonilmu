@@ -209,24 +209,41 @@ class ApiUserController extends Controller
                 'message' => $validator->errors(),
             ], 400);
         }
+
         $referal = $request->input('referal');
         $profile = Profile::where('referal', $referal)->first();
-        if(!$profile)
+        // cek apakaah by referal ada
+        if($profile)
+        {
+            $user = User::where('id', $profile->user_id)->first();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'pencarian user berdasarkan referal',
+                'data' => $user
+            ], 200);
+        }
+
+        $userByPhone = User::where('phone', $referal)->first();
+        if($userByPhone)
         {
             return response()->json([
-                'status' => 'error',
-                'message' => 'referal tidak di temukan'
-            ], 404);
+                'status' => 'success',
+                'message' => 'pencarian user berdasarkan phone',
+                'data' => $userByPhone
+            ], 200);
         }
-        $user = User::where('id', $profile->user_id)->with('profile')->first();
 
         return response()->json([
-            'status' => 'success',
-            'message' => 'hasil pencarian referal',
-            'data' => $user
-        ], 200);
+            'status' => 'error',
+            'message' => 'data referal tidak di temukan'
+        ], 404);
 
     }
+
+    // public function cariReferalByPhone(Request $request)
+    // {
+
+    // }
 
     public function tambahPoint(Request $request)
     {
