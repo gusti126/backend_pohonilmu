@@ -66,7 +66,7 @@ class ApiUserController extends Controller
             }
         }
 
-        $transaksi = TransaksiManual::where('user_id', Auth::user()->id)->get();
+        $transaksi = TransaksiManual::where('user_id', Auth::user()->id)->with('kememberan')->get();
         if(!$transaksi)
         {
             $transaksi = null;
@@ -273,7 +273,8 @@ class ApiUserController extends Controller
         $referalUser = $user->profile->referal;
         $riwayat_referal = null;
 
-        $from_transaksi_manual = TransaksiManual::where('referal', $referalUser)->get();
+        $from_transaksi_manual = TransaksiManual::where('referal', $referalUser)->with('user', 'kememberan')->get();
+        // dd($from_transaksi_manual);
         if($from_transaksi_manual)
         {
             $riwayat_referal['referal_transaksi_manul'] = $from_transaksi_manual;

@@ -103,7 +103,7 @@ class TransaksiManualController extends Controller
 
     public function isPending($id)
     {
-        $transaksi = TransaksiManual::where('user_id', $id)->first();
+        $transaksi = TransaksiManual::where('user_id', $id)->with('kememberan')->first();
         if($transaksi)
         {
             return response()->json([
