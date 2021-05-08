@@ -215,7 +215,7 @@ class ApiUserController extends Controller
         // cek apakaah by referal ada
         if($profile)
         {
-            $user = User::where('id', $profile->user_id)->first();
+            $user = User::where('id', $profile->user_id)->with('profile')->first();
             return response()->json([
                 'status' => 'success',
                 'message' => 'pencarian user berdasarkan referal',
@@ -223,7 +223,7 @@ class ApiUserController extends Controller
             ], 200);
         }
 
-        $userByPhone = User::where('phone', $referal)->first();
+        $userByPhone = User::where('phone', $referal)->with('profile')->first();
         if($userByPhone)
         {
             return response()->json([
