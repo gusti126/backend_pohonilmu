@@ -240,11 +240,6 @@ class ApiUserController extends Controller
 
     }
 
-    // public function cariReferalByPhone(Request $request)
-    // {
-
-    // }
-
     public function tambahPoint(Request $request)
     {
         $rules = [

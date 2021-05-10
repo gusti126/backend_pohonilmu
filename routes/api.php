@@ -24,8 +24,15 @@ Route::middleware('auth:api')->group(function () {
     Route::get('riwayat-referal', 'ApiUserController@riwayatReferal');
     Route::post('logout', 'ApiAuthController@logout');
     // my course
-    Route::get('my-course', 'MyCourseController@index');
     Route::post('my-course/create', 'MyCourseController@create');
+    // join kelas
+    Route::post('join-kelas/create', 'ApiJoinKelasController@create');
+    Route::get('my-course', 'ApiJoinKelasController@index');
+    Route::delete('join-kelas/delete', 'ApiJoinKelasController@deleteJoinKelas');
+    // join materi
+    Route::post('join-materi/create', 'ApiJoinLesson@create');
+    Route::get('my-materi', 'ApiJoinLesson@index');
+    Route::delete('join-materi/delete', 'ApiJoinLesson@deleteJoinLesson');
     // order
     Route::post('order/create', 'ApiOrderController@create');
     // order by tripay
