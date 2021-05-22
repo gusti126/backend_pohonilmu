@@ -40,7 +40,7 @@ class ApiJoinKelasController extends Controller
                 'message' => 'masa berlangganan anda habis'
             ], 400);
         }
-        $myJoinKelas = joinKelas::where('user_id', $userId)->with('course')->get();
+        $myJoinKelas = joinKelas::where('user_id', $userId)->with('course.mentor')->get();
         $myJoinKelasC = joinKelas::where('user_id', $userId)->count();
 
 
