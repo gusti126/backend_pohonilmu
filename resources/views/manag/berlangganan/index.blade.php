@@ -1,10 +1,10 @@
 @extends('layouts.new-admin')
 
 @section('title')
-    Management Berlangganan
+    Management Transaksi
 @endsection
 @section('halaman')
-    Management Berlangganan
+    Management Transaksi
 @endsection
 
 @section('content')
