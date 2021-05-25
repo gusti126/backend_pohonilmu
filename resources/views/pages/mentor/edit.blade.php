@@ -1,12 +1,15 @@
-@extends('layouts.admin')
+@extends('layouts.new-admin')
 
 @section('title')
+    Edit Mentor
+@endsection
+@section('halaman')
     Edit Mentor
 @endsection
 
 @section('content')
     <div class="card shadow p-4">
-        <form action="{{ route('pengajar.update', $item->id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('kel-mentor.update', $item->id) }}" method="post" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group">
@@ -38,7 +41,7 @@
                         <div class="col-md-4">
                             <label for="">Pengembang</label>
                             <select name="user_id" class="form-control">
-                                <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
+                                <option value="{{ $item->user->id }}">{{ $item->user->name }}</option>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach

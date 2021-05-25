@@ -1,53 +1,19 @@
-@extends('layouts.admin')
+@extends('layouts.new-admin')
 
 @section('title')
     Dashboard Pendapatan
 @endsection
 
+@section('halaman')
+    Dashboard Pendapatan
+@endsection
+
 @section('content')
-<h3 class="my-3">Dashboard Management</h3>
     <div class="row">
         {{-- pendapatan --}}
-        <div class="col-md-4 my-1">
-            <div class="card shadow border-left-success p-3">
+        <div class="col-md-12 my-1">
+            <div class="card border-left-success p-3">
                 <h5>Pendapatan @currency($pendapatan) </h5>
-            </div>
-        </div>
-        {{-- bayar semua mentor --}}
-        <div class="col-md-4 my-1">
-            <div class="card shadow border-left-info p-3">
-                <h5>Bayar Semua Mentor @currency($bayar_mentor) </h5>
-            </div>
-        </div>
-        {{-- sisa uang --}}
-        <div class="col-md-4 my-1">
-            <div class="card shadow border-left-warning p-3">
-                <h5>Sisa Uang @currency($sisa_uang)</h5>
-            </div>
-        </div>
-        <div class="col-md-4 my-1">
-            <div class="card shadow border-left-danger p-3">
-                <h5>Jumlah Pengembang : {{ $count_pengembang }}</h5>
-            </div>
-        </div>
-        <div class="col-md-4 my-1">
-            <div class="card shadow border-left-danger p-3">
-                <h5>Jumlah Mentor : {{ $count_mentor }}</h5>
-            </div>
-        </div>
-        <div class="col-md-4 my-1">
-            <div class="card shadow border-left-secondary p-3">
-                <h5>Jumlah Kelas : {{ $count_kelas }}</h5>
-            </div>
-        </div>
-        <div class="col-md-4 my-1">
-            <div class="card shadow border-left-success p-3">
-                <h5>Jumlah Episode : {{ $count_chapter }}</h5>
-            </div>
-        </div>
-        <div class="col-md-4 my-1">
-            <div class="card shadow border-left-warning p-3">
-                <h5>Jumlah Materi atau Video : {{ $count_lesson }}</h5>
             </div>
         </div>
     </div>

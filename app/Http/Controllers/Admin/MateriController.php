@@ -9,6 +9,8 @@ use App\Lesson;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class MateriController extends Controller
 {
@@ -16,10 +18,12 @@ class MateriController extends Controller
     {
         $materi = Chapter::where('course_id', $id)->with('lesson')->get();
         // dd($materi);
+        $course = Course::find($id);
 
         return view('pages.materi.create', [
             'materi' => $materi,
-            'course_id' => $id
+            'course_id' => $id,
+            'course' => $course
         ]);
     }
 
@@ -31,14 +35,15 @@ class MateriController extends Controller
         parse_str( parse_url( $video_url, PHP_URL_QUERY ), $my_array_of_vars );
         if(empty($my_array_of_vars['v']))
         {
-            $request->session()->flash('error', 'url video yang anda masukan tidak valid, jika mengalami kebingungan silahkan hubungi admin');
-            return Redirect::back();
+            Alert::error('Error pada url', 'url materi tidak dapat di akses oleh sistem');
+            // $request->session()->flash('error', 'url video yang anda masukan tidak valid, jika mengalami kebingungan silahkan hubungi admin');
+            return Redirect::back()->with('errors', 'url materi tidak falid');
         }
         $data['video'] = $my_array_of_vars['v'];
         // dd($data);
         $lesson = Lesson::create($data);
-        $request->session()->flash('success', 'Materi Berhasil di Tambahkan');
-        return Redirect::back();
+        // $request->session()->flash('success', 'Materi Berhasil di Tambahkan');
+        return Redirect::back()->with('toast_success', 'Materi Berhasil ditambah');
     }
 
     public function editLesson($course_id,$id)
@@ -69,7 +74,7 @@ class MateriController extends Controller
         $lesson->fill($data);
         $lesson->save();
 
-        return redirect()->route('materi', $course_id)->with('success', 'Materi berhasil di update');
+        return redirect()->route('materi', $course_id)->with('toast_success', 'Materi berhasil di update');
 
     }
 
@@ -78,7 +83,7 @@ class MateriController extends Controller
         $lesson = Lesson::findOrFail($id);
         $lesson->delete();
 
-        return redirect()->back()->with('success', 'materi berhasil di hapus');
+        return redirect()->back()->with('toast_success', 'materi berhasil di hapus');
     }
 
     public function tambahBAB(Request $request)
@@ -87,7 +92,7 @@ class MateriController extends Controller
 
         Chapter::create($data);
 
-        $request->session()->flash('success', 'BAB Materi Berhasil di Tambahkan');
+        $request->session()->flash('toast_success', 'BAB Materi Berhasil di Tambahkan');
         return Redirect::back();
 
     }
@@ -108,7 +113,7 @@ class MateriController extends Controller
         $chapter->fill($data);
         $chapter->save();
 
-        return redirect()->route('materi', $chapter->course_id)->with('success', 'BAB Materi Berhasil di Update');
+        return redirect()->route('materi', $chapter->course_id)->with('toast_success', 'BAB Materi Berhasil di Update');
 
     }
 
@@ -117,7 +122,7 @@ class MateriController extends Controller
         $chapter = Chapter::findOrFail($id);
         $chapter->delete();
 
-        return redirect()->back()->with('success', 'data bab berhasil di hapus');
+        return redirect()->back()->with('toast_success', 'BAB berhasil di hapus');
 
     }
 }

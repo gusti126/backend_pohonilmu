@@ -29,7 +29,7 @@
                                 <td>{{ $mentor->profesi }}</td>
                                 <td>{{ \App\Course::where('mentor_id', $mentor->id)->count() }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('pengajar.edit', $mentor->id) }}" class="btn btn-info btn-sm mr-1">Edit</a>
+                                    <a href="{{ route('kel-mentor.edit', $mentor->id) }}" class="btn btn-info btn-sm mr-1">Edit</a>
                                     {{-- <form action="{{ route('pengajar.destroy', $mentor->id) }}" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')

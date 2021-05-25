@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mentor;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KelMentorController extends Controller
 {
@@ -72,7 +73,7 @@ class KelMentorController extends Controller
 
         Mentor::create($data);
 
-        return redirect()->route('kel-mentor.index')->with('success', 'Data mentor berhasil di tambahkan');
+        return redirect()->route('kel-mentor.index')->with('toast_success', 'Data mentor berhasil di tambahkan');
     }
 
     /**
@@ -94,7 +95,14 @@ class KelMentorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Mentor::with('user')->findOrFail($id);
+        // dd($data);
+        $user = User::where('role', 'pengembang')->get();
+
+        return view('pages.mentor.edit', [
+            'item' => $data,
+            'users' => $user
+        ]);
     }
 
     /**
@@ -106,7 +114,22 @@ class KelMentorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        $mentor = Mentor::findOrFail($id);
+        // dd($data);
+        if($request->file('image'))
+        {
+            $image = $request->file('image')->store('assets/gallery', 'public');
+            $data['image'] = url('storage/'.$image);
+        }
+
+        // dd($data);
+        $mentor->update($data);
+        if(Auth::user()->role === 'admin')
+        {
+            return redirect()->route('kel-mentor.index')->with('toast_success', 'data mentor berhasil di update');
+        }
+        return redirect()->route('kel-mentor.index')->with('toast_success', 'transaki di ubah menjadi gagal');;
     }
 
     /**

@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'Admin\DashboardController@index')->middleware('auth');
+// Route::get('/', function ($id) {
+//    return redirect()->route('login');
+// });
+// Route::get('/admin/dashboard', 'Admin\DashboardController@index')->middleware('auth', 'admin');
 
 Route::prefix('admin')->middleware(['auth', 'admin'])
 ->group(function(){
@@ -21,6 +24,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])
     Route::resource('kel-pengembang', 'Manag\ManagPengembangController');
     Route::resource('kel-mentor', 'Manag\KelMentorController');
     Route::resource('kel-kememberan', 'Manag\KememberanController');
+
+    // kelas
+    Route::resource('kelas', 'Admin\KelasController');
 
     // hadiah
     Route::get('hadiah', 'Manag\HadiahController@index')->name('index-hadiah');
@@ -31,7 +37,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])
     Route::get('hadiah/delete/{id}', 'Manag\HadiahController@delete')->name('delete-hadiah');
     Route::get('hadiah/update/status/{id}', 'Manag\HadiahController@hendleSuksessHadiah')->name('hendle-hadiah-sukses');
 
-    Route::get('kel-pendapatan', 'Manag\PendapatanKelasController@index')->name('pendapatan');
+    Route::get('dashboard', 'Manag\PendapatanKelasController@index')->name('dashboard'); //di controller pendapatan
     Route::get('kel-transaksi', 'Manag\ManagTransaksiController@index')->name('kel-transaksi');
 
     // BERLANGGANAN
@@ -46,8 +52,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])
 
 Route::prefix('pengembang')->middleware(['auth'])->group(function(){
     Route::resource('pengajar', 'Admin\MentorController');
-    Route::get('dashboard', 'Admin\DashboardController@index')->name('dashboard');
-    Route::resource('kelas', 'Admin\KelasController');
+    // Route::get('dashboard', 'Admin\DashboardController@index')->name('dashboard');
+    // Route::resource('kelas', 'Admin\KelasController');
     // materi
     // chapter
     Route::post('kelas/bab/create', 'Admin\MateriController@tambahBAB')->name('chapter-create');

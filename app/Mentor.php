@@ -14,4 +14,8 @@ class Mentor extends Model
     {
         return $this->hasMany('App\Course');
     }
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

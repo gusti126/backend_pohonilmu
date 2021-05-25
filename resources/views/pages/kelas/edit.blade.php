@@ -1,7 +1,10 @@
-@extends('layouts.admin')
+@extends('layouts.new-admin')
 
 @section('title')
-    Tambah Kelas
+    Edit Kelas
+@endsection
+@section('halaman')
+    Edit Kelas
 @endsection
 
 @section('content')
@@ -15,7 +18,6 @@
             </div>
         @endif
     <div id="app">
-        <h3>Tambah Kelas</h3>
             <form action="{{ route('kelas.update', $kelas->id) }}" method="post" enctype="multipart/form-data">
             @method('PUT')
             @csrf

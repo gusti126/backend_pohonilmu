@@ -1,6 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.new-admin')
 
 @section('title')
+    Tambah Kelas
+@endsection
+@section('halaman')
     Tambah Kelas
 @endsection
 
@@ -15,7 +18,6 @@
             </div>
         @endif
     <div id="app">
-        <h3>Tambah Kelas</h3>
             <form action="{{ route('kelas.store') }}" method="post" enctype="multipart/form-data">
             @csrf
                 <div class="card p-4">

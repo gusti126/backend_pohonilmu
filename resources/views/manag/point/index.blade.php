@@ -1,12 +1,15 @@
-@extends('layouts.admin')
+@extends('layouts.new-admin')
 
 @section('title')
-    Management Hadia
+    Management Hadiah
+@endsection
+@section('halaman')
+    Management Hadiah
 @endsection
 
 @section('content')
-    <div class="row my-3">
-        <div class="col-md-9">
+    <div class="row mb-3">
+        <div class="col-md-12">
             <div class="card p-3">
                 <div class="row">
                     <div class="col border-right">
@@ -21,25 +24,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 text-right">
+        <div class="col-md-12 text-right">
             <a href="{{ route('create-hadiah') }}" class="btn btn-primary">Tambah Hadiah</a>
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success alert-block my-2">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{{ $message }}</strong>
-                </div>
-            @endif
-            @if ($message = Session::get('error'))
-                <div class="alert alert-danger alert-block my-2">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{{ $message }}</strong>
-                </div>
-            @endif
-        </div>
+
         @foreach ($items as $item)
             <div class="col-md-4 my-3">
                 <div class="card shadow">
@@ -49,7 +39,7 @@
                         {{-- <p>Total Yang Menukarkan Hadiah {{ $item['penukaran_hadiah_count'] }}</p> --}}
                        <div class="text-center">
                             <a href="{{ route('edit-hadiah', $item->id) }}" class="btn btn-primary">Ubah</a>
-                        <a href="{{ route('delete-hadiah', $item->id) }}" class="btn btn-outline-danger ml-5">Delete</a>
+                        <a href="{{ route('delete-hadiah', $item->id) }}" class="btn btn-outline-danger ml-5" onclick="return confirm('Hapus Hadiah ?')">Delete</a>
                        </div>
 
                     </div>

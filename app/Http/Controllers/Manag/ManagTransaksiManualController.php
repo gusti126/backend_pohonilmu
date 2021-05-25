@@ -7,12 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Profile;
 use App\TransaksiManual;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ManagTransaksiManualController extends Controller
 {
     public function index()
     {
-        $transaksi_sukses = TransaksiManual::where('status', 'sukses')->with('user', 'kememberan')->orderBy('status', 'ASC')->paginate(10);
+        $transaksi_sukses = TransaksiManual::where('status', 'sukses')->with('user', 'kememberan')->orderBy('id', 'DESC')->paginate(10);
         $transaksi_sukses_count = TransaksiManual::where('status', 'sukses')->count();
         $transaksi_pending = TransaksiManual::where('status', 'pending')->with('user', 'kememberan')->orderBy('id', 'DESC')->paginate(8);
         $transaksi_gagal = TransaksiManual::where('status', 'gagal')->with('user', 'kememberan')->orderBy('id', 'DESC')->paginate(8);
@@ -55,7 +56,7 @@ class ManagTransaksiManualController extends Controller
             $profile = Profile::where('referal', $referal)->first();
             if(!$profile)
             {
-                return redirect()->route('home-transaksi-manual')->with('success', 'data transaksi berhasil di ubah referal tidak falid');
+                return redirect()->route('home-transaksi-manual')->with('toast_success', 'Approved Berhasil, referal tidak falid');
             }
 
             $point = $profile->point + $transaksi_manual->kememberan->get_point + $double_point;
@@ -65,14 +66,14 @@ class ManagTransaksiManualController extends Controller
 
             if($count_transaksi_manual <= 1000)
             {
-                return redirect()->route('home-transaksi-manual')->with('success', 'data transaksi berhasil di ubah referal falid dan double point');
+                return redirect()->route('home-transaksi-manual')->with('toast_success', 'Approved Berhasil, referal falid dan double point');
             }
 
-            return redirect()->route('home-transaksi-manual')->with('success', 'data transaksi berhasil di ubah referal falid');
+            return redirect()->route('home-transaksi-manual')->with('toast_success', 'Approved Berhasil, referal falid');
         }
 
-
-        return redirect()->route('home-transaksi-manual')->with('success', 'data transaksi berhasil di ubah');
+        // toast('Your Post as been submited!','success');
+        return redirect()->route('home-transaksi-manual')->with('toast_success', 'Approved Berhasil');
     }
 
     public function setFailed($id)
@@ -82,6 +83,6 @@ class ManagTransaksiManualController extends Controller
             'status' => 'gagal'
         ]);
 
-        return redirect()->route('home-transaksi-manual')->with('success', 'data transaki berhasil di ubah menjadi gagal/failed');
+        return redirect()->route('home-transaksi-manual')->with('toast_success', 'transaki di ubah menjadi gagal');
     }
 }

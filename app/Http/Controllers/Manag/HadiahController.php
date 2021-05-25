@@ -53,7 +53,7 @@ class HadiahController extends Controller
         // dd($data);
         $hadiah = Hadiah::create($data);
 
-        return redirect()->route('index-hadiah')->with('success', 'data hadiah berhasil di tambahkan');
+        return redirect()->route('index-hadiah')->with('toast_success', 'data hadiah berhasil di tambahkan');
     }
 
     public function edit($id)
@@ -80,14 +80,16 @@ class HadiahController extends Controller
     $hadiah->fill($data);
     $hadiah->save();
 
-    return redirect()->route('index-hadiah')->with('success', 'data hadiah berhasil di update');
+    return redirect()->route('index-hadiah')->with('toast_success', 'data hadiah berhasil di update');
     }
 
     public function delete($id)
     {
-        $data = deleteHadiah($id);
+        $data = Hadiah::find($id);
 
-        return redirect()->route('index-hadiah')->with('success', 'data hadiah berhasil di hapus');
+        $data->delete();
+
+        return redirect()->route('index-hadiah')->with('toast_success', 'data hadiah berhasil di hapus');
     }
 
     public function hendleSuksessHadiah($id)
@@ -98,6 +100,6 @@ class HadiahController extends Controller
         $hadiah->update([
             'status' => $status
         ]);
-        return redirect()->route('index-hadiah')->with('success', 'data hadiah berhasil di update');
+        return redirect()->route('index-hadiah')->with('toast_success', 'data hadiah berhasil di update');
     }
 }

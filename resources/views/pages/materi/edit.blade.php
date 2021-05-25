@@ -1,6 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.new-admin')
 
 @section('title')
+Edit Materi Video
+@endsection
+@section('halaman')
 Edit Materi Video
 @endsection
 

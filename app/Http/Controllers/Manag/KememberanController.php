@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manag;
 use App\Http\Controllers\Controller;
 use App\Kememberan;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KememberanController extends Controller
 {
@@ -52,7 +53,7 @@ class KememberanController extends Controller
 
         $kememberan = Kememberan::create($data);
 
-        return redirect()->route('kel-kememberan.index')->with('success', 'Data Kememberan Berhasil di Tambahkan');
+        return redirect()->route('kel-kememberan.index')->with('toast_success', 'Kememberan Berhasil di Tambahkan');
     }
 
     /**
@@ -104,7 +105,7 @@ class KememberanController extends Controller
         $kememberan->fill($data);
         $kememberan->save();
 
-        return redirect()->route('kel-kememberan.index')->with('success', 'data kememberan berhasil di update');
+        return redirect()->route('kel-kememberan.index')->with('toast_success', 'Suksess Update Kememberan');
     }
 
     /**
@@ -118,6 +119,6 @@ class KememberanController extends Controller
         $data = Kememberan::findOrFail($id);
         $data->delete();
 
-        return redirect()->route('kel-kememberan.index')->with('success', 'data kememberan berhasil di delete');
+        return redirect()->route('kel-kememberan.index')->with('toast_success', 'data kememberan berhasil di delete');
     }
 }

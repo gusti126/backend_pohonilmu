@@ -1,6 +1,9 @@
-@extends('layouts.manag')
+@extends('layouts.new-admin')
 
 @section('title')
+    Tambah Mentor
+@endsection
+@section('halaman')
     Tambah Mentor
 @endsection
 
@@ -15,11 +18,11 @@
         </div>
     @endif
     <div id="app">
-        <h3>Tambah Mentor</h3>
+
             <form action="{{ route('kel-mentor.store') }}" method="post" enctype="multipart/form-data">
             @csrf
                 <div class="card p-4">
-                    {{-- 'nama', 'email', 'profesi', 'image', 'no_rekening', 'user_id' --}}
+                       <h6>Tambah Mentor</h6>
                     <div id="app">
                         <div class="row">
                             <div class="col-4">
@@ -80,7 +83,7 @@
 @push('script')
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-   <script src="{{ url('backend/vendor/vue/vue.js') }}"></script>
+<script src="{{ url('backend/vendor/vue/vue.js') }}"></script>
     <script>
 
         var vm = new Vue({

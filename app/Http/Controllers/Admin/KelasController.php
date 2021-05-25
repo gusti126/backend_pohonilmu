@@ -82,7 +82,7 @@ class KelasController extends Controller
         // dd($data);
         $course = Course::create($data);
 
-        return redirect()->route('kelas.index');
+        return redirect()->route('kelas.index')->with('toast_success', 'kelas berhasil di tambah');
     }
 
     /**
@@ -158,6 +158,6 @@ class KelasController extends Controller
         }
 
         $data->delete();
-        return Redirect::back()->with('success', 'Kelas Berhasil di Hapus.');
+        return Redirect::back()->with('toast_success', 'Kelas Berhasil di Hapus.');
     }
 }

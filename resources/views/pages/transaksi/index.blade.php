@@ -1,11 +1,13 @@
-@extends('layouts.admin')
+@extends('layouts.new-admin')
 
 @section('title')
     Page Transaksi
 @endsection
+@section('halaman')
+    Page Transaksi
+@endsection
 
 @section('content')
-    <h4>Management Transaksi</h4>
     <div class="row my-3">
         <div class="col-12">
             <div class="total-transaksi">

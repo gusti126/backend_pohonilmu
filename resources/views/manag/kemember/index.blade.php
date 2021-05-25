@@ -1,37 +1,25 @@
-@extends('layouts.admin')
+@extends('layouts.new-admin')
 
 @section('title')
     Member Page
 @endsection
+@section('halaman')
+    Member Page
+@endsection
 
 @section('content')
-    <div class="row my-3">
-        <div class="col-6">
-            <h4>Halaman Mentor</h4>
-        </div>
-        <div class="col-6 text-right">
-            <a href="{{ route('kel-kememberan.create') }}" class="btn btn-primary ">Tambah Kememberan</a>
-        </div>
-        <div class="col-12">
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success alert-block my-2">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{{ $message }}</strong>
-                </div>
-            @endif
-            @if ($message = Session::get('error'))
-                <div class="alert alert-danger alert-block my-2">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{{ $message }}</strong>
-                </div>
-            @endif
-        </div>
-    </div>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Jumlah Data Tables Kememberan </h6>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="m-0 font-weight-bold text-primary">Jumlah Data Tables Kememberan </h6>
+                </div>
+                <div class="col-6 text-right">
+                    <a href="{{ route('kel-kememberan.create') }}" class="btn btn-primary ">Tambah Kememberan</a>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -57,7 +45,7 @@
                                     <form action="{{ route('kel-kememberan.destroy', $item->id) }}" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
-                                        <button class="btn btn-outline-danger btn-sm">
+                                        <button class="btn btn-outline-danger btn-sm" onclick="return confirm('Yakin Akan di Hapus?')">
                                             Hapus
                                         </button>
                                     </form>
