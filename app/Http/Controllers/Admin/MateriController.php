@@ -18,6 +18,7 @@ class MateriController extends Controller
     {
         $materi = Chapter::where('course_id', $id)->with('lesson')->get();
         // dd($materi);
+        // lesson yang berelasi ke chapter
         $course = Course::find($id);
 
         return view('pages.materi.create', [

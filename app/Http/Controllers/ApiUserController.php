@@ -8,6 +8,7 @@ use App\Mentor;
 use App\OrderTripay;
 use App\Profile;
 use App\TransaksiManual;
+use App\TukarHadiah;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -76,6 +77,8 @@ class ApiUserController extends Controller
         $pendapatan *= 100;
         // dd($pendapatan);
 
+        // riwayat penukaran hadiah
+        $riwayat_penukaran_hadiah = TukarHadiah::wehere('user_id', Auth::user()->id)->get();
         return response()->json([
             'status' => 'success',
             'message' => 'my profile user',
@@ -84,7 +87,8 @@ class ApiUserController extends Controller
             'myCourse' => $mycourse,
             'pendapatan' => $pendapatan,
             'berlangganan' => $berlangganan,
-            'riwayat_transaksi' => $transaksi
+            'riwayat_transaksi' => $transaksi,
+            'riwayat_penukaran_hadiah' => $riwayat_penukaran_hadiah
         ], 200);
 
 

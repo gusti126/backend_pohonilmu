@@ -13,6 +13,9 @@
 @endphp
     <div class="card p-4">
             <div class="row">
+                <div class="col-md-12">
+                    <h6>Total BAB {{ $materi->count() }}</h6>
+                </div>
                 @forelse ($materi as $chapter)
                     <div class="col-md-6 my-3">
                         <div class="card-materi h-100">
@@ -23,7 +26,7 @@
                             <br>
                             <span style="font-weight: bold; margin-bottom: 6px">{{ $chapter->nama }} <a href="{{ route('chapter-edit', $chapter->id) }}" class="text-info">Edit</a> | <a onclick="return confirm('Yakin Ingin di Hapus')" href="{{ route('chapter-hapus', $chapter->id) }}" class="text-danger">Hapus</a> </span>
                             <br>
-                                {{-- mengambuk data lesson perchapter --}}
+                                {{-- menggambungkan data lesson perchapter --}}
                                 @foreach ($chapter->lesson as $item)
                                     <div class="row mt-2">
                                         <div class="col-12 ">

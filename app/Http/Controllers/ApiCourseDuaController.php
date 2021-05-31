@@ -7,6 +7,24 @@ use Illuminate\Http\Request;
 
 class ApiCourseDuaController extends Controller
 {
+    public function search($keyword)
+    {
+        $data = Course::where('nama', 'like', '%'.$keyword.'%')->get();
+        if(is_null($data))
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'data not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'filter data kelas berhasil',
+            'data' => $data
+        ], 200);
+    }
+
     public function kelasTerbaru()
     {
 

@@ -60,6 +60,7 @@ Route::resource('course', 'CourseController');
 Route::resource('chapter', 'ChapterController');
 Route::resource('lesson', 'LessonController');
 Route::get('kelas/new', 'ApiCourseDuaController@kelasTerbaru');
+Route::get('kelas/{keyword}', 'ApiCourseDuaController@search');
 
 
 // referal di controller user
