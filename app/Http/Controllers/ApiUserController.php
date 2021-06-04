@@ -78,7 +78,7 @@ class ApiUserController extends Controller
         // dd($pendapatan);
 
         // riwayat penukaran hadiah
-        $riwayat_penukaran_hadiah = TukarHadiah::wehere('user_id', Auth::user()->id)->get();
+        $riwayat_penukaran_hadiah = TukarHadiah::where('user_id', Auth::user()->id)->get();
         return response()->json([
             'status' => 'success',
             'message' => 'my profile user',
@@ -182,6 +182,7 @@ class ApiUserController extends Controller
 
         if($request->file('image'))
         {
+            // dd($request->file('image'));
             $image = $request->file('image')->store(
                 'assets/profile', 'public');
             $data['image'] = url('storage/'.$image);
@@ -190,7 +191,7 @@ class ApiUserController extends Controller
                 'image' => $data['image'],
             ]);
         }
-
+        dd($data);
         return response()->json([
             'status' => 'success',
             'message' => 'data user berhasil di update',
