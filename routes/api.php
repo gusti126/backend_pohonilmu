@@ -28,6 +28,7 @@ Route::middleware('auth:api')->group(function () {
     // join kelas
     Route::post('join-kelas/create', 'ApiJoinKelasController@create');
     Route::get('my-course', 'ApiJoinKelasController@index');
+    Route::delete('my-course/{id}', 'ApiJoinKelasController@destroyMyCourse'); //untuk mendelete satu data mycourse
     Route::delete('join-kelas/delete', 'ApiJoinKelasController@deleteJoinKelas');
     // join materi
     Route::post('join-materi/create', 'ApiJoinLesson@create');

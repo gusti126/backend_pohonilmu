@@ -139,6 +139,7 @@ class ApiJoinKelasController extends Controller
 
     }
 
+    // untuk mendelete semua kelas yang pernah di join
     public function deleteJoinKelas()
     {
         $userId = Auth::user()->id;
@@ -155,6 +156,24 @@ class ApiJoinKelasController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'data berhasil di delete'
+        ], 200);
+    }
+
+    public function destroyMyCourse($id)
+    {
+        $data = joinKelas::find($id);
+        if(!$data)
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'data id my course not found'
+            ], 404);
+        }
+
+        $data->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data my course berhasil di hapus'
         ], 200);
     }
 }
