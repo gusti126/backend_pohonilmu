@@ -78,7 +78,7 @@ class ApiUserController extends Controller
         // dd($pendapatan);
 
         // riwayat penukaran hadiah
-        $riwayat_penukaran_hadiah = TukarHadiah::where('user_id', Auth::user()->id)->get();
+        $riwayat_penukaran_hadiah = TukarHadiah::where('user_id', Auth::user()->id)->with('hadiah')->get();
         return response()->json([
             'status' => 'success',
             'message' => 'my profile user',
