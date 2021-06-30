@@ -177,6 +177,10 @@
                         id: 4,
                         nama: 'Buruh',
                     },
+                    {
+                        id: 5,
+                        nama: 'Pengajar',
+                    },
                 ],
                 softskill : [
                     {
